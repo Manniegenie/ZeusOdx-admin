@@ -11,7 +11,6 @@ export interface User {
   bvnVerified: boolean;
   createdAt: string;
   updatedAt: string;
-  ngnbBalance: number;
   avatarUrl: string | null;
 }
 

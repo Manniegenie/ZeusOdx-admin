@@ -9,6 +9,14 @@ export const columns: ColumnDef<User>[] = [
     header: "User ID",
   },
   {
+    accessorKey: "firstname",
+    header: "First Name",
+  },
+  {
+    accessorKey: "lastname",
+    header: "Last Name",
+  },
+  {
     accessorKey: "username",
     header: "Username",
   },
@@ -39,10 +47,6 @@ export const columns: ColumnDef<User>[] = [
     cell: info => info.getValue() ? 'Yes' : 'No',
   },
   {
-    accessorKey: "ngnbBalance",
-    header: "NGNB Balance",
-  },
-  {
     accessorKey: "createdAt",
     header: "Created At",
     cell: info => new Date(info.getValue() as string).toLocaleString(),
@@ -59,8 +63,6 @@ export const columns: ColumnDef<User>[] = [
             onClick={() => setOpen((prev) => !prev)}
             aria-label="More actions"
           >
-            {/* Use a MoreVertical icon from lucide-react or fallback to more-horizontal asset */}
-            {/* If lucide-react is not installed, replace with an <img src> from assets */}
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
           </button>
           {open && (
@@ -69,7 +71,6 @@ export const columns: ColumnDef<User>[] = [
                 className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                 onClick={() => {
                   setOpen(false);
-                  // TODO: Implement disable 2fa logic here
                   alert(`Disable 2fa for ${row.original.email}`);
                 }}
               >
