@@ -17,6 +17,17 @@ export function Dashboard() {
   const [loading, setLoading] = useState(false)
   const [analytics, setAnalytics] = useState<DashboardAnalyticsResponse | null>(null)
 
+  // Helper function to format currency
+  const formatCurrency = (value: number | undefined | null) => {
+    if (value === undefined || value === null) return '—';
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
+
   useEffect(() => {
     titleCtx?.setTitle('Dashboard');
   }, [titleCtx]);
@@ -73,7 +84,9 @@ export function Dashboard() {
           <Card className="p-6 rounded-lg border-gray-200 shadow-none">
           <div className="flex flex-col items-start gap-3 space-x-4">
               <p className="text-sm text-gray-500 font-semibold">Transaction Volume</p>
-              <h3 className="text-2xl font-bold">{loading ? '...' : analytics?.data?.transactionVolume ?? '—'}</h3>
+              <h3 className="text-2xl font-bold">
+                {loading ? '...' : formatCurrency(analytics?.data?.transactionVolume)}
+              </h3>
           </div>
         </Card>
       </div>
