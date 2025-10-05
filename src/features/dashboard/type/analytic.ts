@@ -52,6 +52,7 @@ export interface DashboardAnalyticsData {
   users: DashboardUsers
   chatbotTrades: ChatbotTrades
   tokenStats: TokenStat[]
+  transactionVolume: number  // ← Added this line
 }
 
 export interface DashboardAnalyticsResponse {
