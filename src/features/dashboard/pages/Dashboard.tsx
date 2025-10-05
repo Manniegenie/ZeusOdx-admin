@@ -6,7 +6,6 @@ import { useUserStore } from '@/features/users/store/userStore';
 import { getDashboardAnalytics } from '../services/analyticsService'
 import { toast } from 'sonner'
 import type { DashboardAnalyticsResponse } from '../type/analytic';
-import TokenStatsChart from '../components/TokenStatsChart'
 import {DataTable} from '../components/data-table';
 import {columns} from '../components/columns';
 
