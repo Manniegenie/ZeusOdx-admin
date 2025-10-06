@@ -163,14 +163,6 @@ export function Dashboard() {
       </div>
 
       <div className="w-full">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold">Recent Transactions</h2>
-          <span className="text-sm text-gray-500">
-            {transactions.length} transactions loaded
-            {hasNextPage && ' • Scroll for more'}
-          </span>
-        </div>
-        
         {transactionsLoading ? (
           <div className="flex items-center justify-center w-full h-32">
             <svg className="animate-spin h-8 w-8 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
