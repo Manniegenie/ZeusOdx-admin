@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useRef, useCallback } from 'react';
 import { Card } from '@/components/ui/card';
 import CardBg from '../../../assets/img/card-bg.png';
 import { DashboardTitleContext } from '@/layouts/DashboardTitleContext';
@@ -18,6 +18,13 @@ export function Dashboard() {
   const [analytics, setAnalytics] = useState<DashboardAnalyticsResponse | null>(null)
   const [transactions, setTransactions] = useState<Transaction[]>([])
   const [transactionsLoading, setTransactionsLoading] = useState(false)
+  
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1)
+  const [hasNextPage, setHasNextPage] = useState(false)
+  const [loadingMore, setLoadingMore] = useState(false)
+  
+  const tableContainerRef = useRef<HTMLDivElement>(null)
 
   // Helper function to format currency
   const formatCurrency = (value: number | undefined | null) => {
@@ -50,7 +57,7 @@ export function Dashboard() {
     load()
   }, [])
 
-  // Fetch recent transactions
+  // Fetch initial transactions
   useEffect(() => {
     const loadTransactions = async () => {
       setTransactionsLoading(true)
@@ -59,6 +66,8 @@ export function Dashboard() {
         
         if (result.success && result.data) {
           setTransactions(result.data)
+          setHasNextPage(result.pagination.hasNextPage)
+          setCurrentPage(1)
         }
       } catch (err) {
         console.error('Failed to load transactions', err)
@@ -69,6 +78,46 @@ export function Dashboard() {
     }
     loadTransactions()
   }, [])
+
+  // Load more transactions
+  const loadMoreTransactions = useCallback(async () => {
+    if (loadingMore || !hasNextPage) return
+    
+    setLoadingMore(true)
+    try {
+      const nextPage = currentPage + 1
+      const result = await getRecentTransactions(nextPage, 50)
+      
+      if (result.success && result.data) {
+        setTransactions(prev => [...prev, ...result.data])
+        setHasNextPage(result.pagination.hasNextPage)
+        setCurrentPage(nextPage)
+      }
+    } catch (err) {
+      console.error('Failed to load more transactions', err)
+      toast.error('Failed to load more transactions')
+    } finally {
+      setLoadingMore(false)
+    }
+  }, [currentPage, hasNextPage, loadingMore])
+
+  // Infinite scroll handler
+  useEffect(() => {
+    const container = tableContainerRef.current
+    if (!container) return
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = container
+      
+      // Load more when scrolled to bottom (with 100px threshold)
+      if (scrollHeight - scrollTop <= clientHeight + 100) {
+        loadMoreTransactions()
+      }
+    }
+
+    container.addEventListener('scroll', handleScroll)
+    return () => container.removeEventListener('scroll', handleScroll)
+  }, [loadMoreTransactions])
 
   return (
     <div className="w-full bg-white space-y-6 p-4 rounded">
@@ -114,7 +163,14 @@ export function Dashboard() {
       </div>
 
       <div className="w-full">
-        <h2 className="text-lg font-semibold mb-4">Recent Transactions</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold">Recent Transactions</h2>
+          <span className="text-sm text-gray-500">
+            {transactions.length} transactions loaded
+            {hasNextPage && ' • Scroll for more'}
+          </span>
+        </div>
+        
         {transactionsLoading ? (
           <div className="flex items-center justify-center w-full h-32">
             <svg className="animate-spin h-8 w-8 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -123,7 +179,25 @@ export function Dashboard() {
             </svg>
           </div>
         ) : (
-          <DataTable columns={columns} data={transactions} />
+          <div ref={tableContainerRef} className="max-h-[600px] overflow-y-auto">
+            <DataTable columns={columns} data={transactions} />
+            
+            {loadingMore && (
+              <div className="flex items-center justify-center w-full py-4">
+                <svg className="animate-spin h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                </svg>
+                <span className="ml-2 text-sm text-gray-500">Loading more...</span>
+              </div>
+            )}
+            
+            {!hasNextPage && transactions.length > 0 && (
+              <div className="text-center py-4 text-sm text-gray-500">
+                No more transactions to load
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>
