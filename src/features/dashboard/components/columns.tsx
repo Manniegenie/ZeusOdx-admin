@@ -9,7 +9,9 @@ export const columns: ColumnDef<Transaction>[] = [
     header: "Transaction ID",
     cell: info => {
       const value = info.getValue() as string;
-      return value ? value.substring(0, 8) + '...' : '—';
+      return value ? (
+        <span className="font-mono text-xs">{value}</span>
+      ) : '—';
     }
   },
   {
