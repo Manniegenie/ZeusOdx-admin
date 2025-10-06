@@ -487,14 +487,13 @@ export function Dashboard() {
 
       {/* Recent Transactions Section */}
       <div className="w-full">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold">Recent Transactions</h2>
-          {activeFilterCount > 0 && (
+        {activeFilterCount > 0 && (
+          <div className="flex items-center justify-end mb-4">
             <span className="text-sm text-gray-500">
               {transactions.length} result{transactions.length !== 1 ? 's' : ''} found
             </span>
-          )}
-        </div>
+          </div>
+        )}
 
         {transactionsLoading ? (
           <div className="flex items-center justify-center w-full h-32">
