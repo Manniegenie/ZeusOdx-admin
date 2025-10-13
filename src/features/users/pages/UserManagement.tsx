@@ -1,9 +1,9 @@
 import { useContext, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { DashboardTitleContext } from '@/layouts/DashboardTitleContext';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useUserManagement } from '../hooks/useUserManagement';
 import { DataTable } from '../components/UserTable';
 import { UserStatsCards } from '../components/UserStatsCards';
 import { Search } from 'lucide-react';
@@ -14,32 +14,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { searchUsers, fetchUserStats } from '../store/userStore';
+import type { RootState } from '@/core/store/store';
+import type { AppDispatch } from '@/core/store/store';
 
 export function UserManagement() {
   const titleCtx = useContext(DashboardTitleContext);
-  const {
-    users,
-    loading,
-    stats,
-    updateSearchParams,
-    pagination,
-  } = useUserManagement();
+  const dispatch = useDispatch<AppDispatch>();
+  
+  const { users, loading, stats, pagination } = useSelector((state: RootState) => state.users);
 
   useEffect(() => {
     titleCtx?.setTitle('User Management');
-  }, [titleCtx]);
+    dispatch(fetchUserStats());
+  }, [titleCtx, dispatch]);
 
   const handleSearch = (value: string) => {
-    updateSearchParams({ q: value });
+    dispatch(searchUsers({ q: value, page: 1 }));
   };
 
   const handleSort = (value: string) => {
     const [field, order] = value.split('-');
-    updateSearchParams({ sortBy: field as any, sortOrder: order as 'asc' | 'desc' });
+    dispatch(searchUsers({ sortBy: field, sortOrder: order as 'asc' | 'desc' }));
   };
 
   const handlePageChange = (page: number) => {
-    updateSearchParams({ page });
+    dispatch(searchUsers({ page }));
   };
 
   return (
