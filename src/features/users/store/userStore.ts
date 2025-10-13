@@ -1,31 +1,21 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { userService } from '../services/userService';
-import type { User } from '../types/user';
+import type { User, GetUsersResponse } from '../types/user';
 
-interface UserState {
+interface UsersState {
   users: User[];
-  stats: {
-    totalUsers: number;
-    activeUsers: number;
-    recentUsers: number;
-    kycBreakdown: Record<string, number>;
-    percentageActive: number;
-  } | null;
   pagination: {
-    currentPage: number;
-    totalPages: number;
-    totalResults: number;
+    total: number;
     limit: number;
-    hasNextPage: boolean;
-    hasPrevPage: boolean;
+    skip: number;
+    hasMore: boolean;
   } | null;
   loading: boolean;
   error: string | null;
 }
 
-const initialState: UserState = {
+const initialState: UsersState = {
   users: [],
-  stats: null,
   pagination: null,
   loading: false,
   error: null,
@@ -35,8 +25,8 @@ export const searchUsers = createAsyncThunk(
   'users/searchUsers',
   async (params: {
     email?: string;
-    firstName?: string;
-    lastName?: string;
+    firstname?: string;
+    lastname?: string;
     q?: string;
     limit?: number;
     page?: number;
@@ -48,39 +38,26 @@ export const searchUsers = createAsyncThunk(
   }
 );
 
-export const fetchUserStats = createAsyncThunk(
-  'users/fetchStats',
-  async () => {
-    const response = await userService.getUserStats();
-    return response;
-  }
-);
-
-const userSlice = createSlice({
+const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Search Users
       .addCase(searchUsers.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(searchUsers.fulfilled, (state, action) => {
         state.loading = false;
-        state.users = action.payload.users;
-        state.pagination = action.payload.meta.pagination;
+        state.users = action.payload.data.users;
+        state.pagination = action.payload.data.pagination;
       })
       .addCase(searchUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message ?? 'Failed to search users';
-      })
-      // Fetch Stats
-      .addCase(fetchUserStats.fulfilled, (state, action) => {
-        state.stats = action.payload.stats;
       });
   },
 });
 
-export default userSlice.reducer;
+export default usersSlice.reducer;

@@ -9,7 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ChevronLeft, ChevronRight, Eye } from "lucide-react";
-import type { User } from "../hooks/useUserManagement";
+import type { User } from "../types/user";
 
 interface DataTableProps {
   data: User[];
@@ -45,12 +45,12 @@ export function DataTable({ data, loading, pagination, onPageChange }: DataTable
     );
   };
 
-  const getStatusBadge = (isActive: boolean, emailVerified: boolean) => {
-    if (!isActive) {
-      return <Badge variant="destructive">Inactive</Badge>;
+  const getStatusBadge = (emailVerified: boolean, bvnVerified: boolean) => {
+    if (bvnVerified) {
+      return <Badge variant="default" className="bg-green-100 text-green-800">BVN Verified</Badge>;
     }
     if (emailVerified) {
-      return <Badge variant="default" className="bg-green-100 text-green-800">Verified</Badge>;
+      return <Badge variant="default" className="bg-blue-100 text-blue-800">Email Verified</Badge>;
     }
     return <Badge variant="secondary">Pending</Badge>;
   };
@@ -79,16 +79,16 @@ export function DataTable({ data, loading, pagination, onPageChange }: DataTable
           </TableHeader>
           <TableBody>
             {data.map((user) => (
-              <TableRow key={user.id}>
+              <TableRow key={user._id}>
                 <TableCell>
                   <div>
-                    <div className="font-medium">{user.fullName || 'No Name'}</div>
+                    <div className="font-medium">{`${user.firstname} ${user.lastname}`.trim() || 'No Name'}</div>
                     <div className="text-sm text-gray-500">{user.email}</div>
                   </div>
                 </TableCell>
-                <TableCell>{user.phoneNumber || '—'}</TableCell>
+                <TableCell>{user.phonenumber || '—'}</TableCell>
                 <TableCell>{getKycBadge(user.kycLevel)}</TableCell>
-                <TableCell>{getStatusBadge(user.isActive, user.emailVerified)}</TableCell>
+                <TableCell>{getStatusBadge(user.emailVerified, user.bvnVerified)}</TableCell>
                 <TableCell>{formatDate(user.createdAt)}</TableCell>
                 <TableCell className="text-right">
                   <Button variant="ghost" size="icon">

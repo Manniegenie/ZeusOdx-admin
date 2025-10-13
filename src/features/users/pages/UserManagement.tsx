@@ -5,7 +5,6 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DataTable } from '../components/UserTable';
-import { UserStatsCards } from '../components/UserStatsCards';
 import { Search } from 'lucide-react';
 import {
   Select,
@@ -14,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { searchUsers, fetchUserStats } from '../store/userStore';
+import { searchUsers } from '../store/userStore';
 import type { RootState } from '@/core/store/store';
 import type { AppDispatch } from '@/core/store/store';
 
@@ -22,15 +21,15 @@ export function UserManagement() {
   const titleCtx = useContext(DashboardTitleContext);
   const dispatch = useDispatch<AppDispatch>();
   
-  const { users, loading, stats, pagination } = useSelector((state: RootState) => state.users);
+  const { users, loading, pagination } = useSelector((state: RootState) => state.users);
 
   useEffect(() => {
     titleCtx?.setTitle('User Management');
-    dispatch(fetchUserStats());
+    dispatch(searchUsers({})); // Initial load
   }, [titleCtx, dispatch]);
 
   const handleSearch = (value: string) => {
-    dispatch(searchUsers({ q: value, page: 1 }));
+    dispatch(searchUsers({ q: value }));
   };
 
   const handleSort = (value: string) => {
@@ -44,9 +43,6 @@ export function UserManagement() {
 
   return (
     <div className="space-y-6">
-      {/* Stats Section */}
-      <UserStatsCards stats={stats} />
-
       {/* Main Content */}
       <Card className="p-6">
         <Tabs defaultValue="all" className="w-full">
@@ -89,16 +85,26 @@ export function UserManagement() {
             <DataTable
               data={users}
               loading={loading}
-              pagination={pagination}
+              pagination={{
+                currentPage: pagination?.skip ? Math.floor(pagination.skip / pagination.limit) + 1 : 1,
+                totalPages: pagination?.total ? Math.ceil(pagination.total / (pagination?.limit || 10)) : 1,
+                hasNextPage: pagination?.hasMore || false,
+                hasPrevPage: pagination?.skip ? pagination.skip > 0 : false
+              }}
               onPageChange={handlePageChange}
             />
           </TabsContent>
 
           <TabsContent value="active" className="mt-0">
             <DataTable
-              data={users.filter(user => user.isActive)}
+              data={users.filter(user => user.emailVerified)}
               loading={loading}
-              pagination={pagination}
+              pagination={{
+                currentPage: pagination?.skip ? Math.floor(pagination.skip / pagination.limit) + 1 : 1,
+                totalPages: pagination?.total ? Math.ceil(pagination.total / (pagination?.limit || 10)) : 1,
+                hasNextPage: pagination?.hasMore || false,
+                hasPrevPage: pagination?.skip ? pagination.skip > 0 : false
+              }}
               onPageChange={handlePageChange}
             />
           </TabsContent>
@@ -108,7 +114,12 @@ export function UserManagement() {
               <DataTable
                 data={users.filter(user => user.kycLevel === level)}
                 loading={loading}
-                pagination={pagination}
+                pagination={{
+                  currentPage: pagination?.skip ? Math.floor(pagination.skip / pagination.limit) + 1 : 1,
+                  totalPages: pagination?.total ? Math.ceil(pagination.total / (pagination?.limit || 10)) : 1,
+                  hasNextPage: pagination?.hasMore || false,
+                  hasPrevPage: pagination?.skip ? pagination.skip > 0 : false
+                }}
                 onPageChange={handlePageChange}
               />
             </TabsContent>
