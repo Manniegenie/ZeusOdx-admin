@@ -46,18 +46,22 @@ export function UserList() {
     titleCtx?.setTitle('User Management');
   }, [titleCtx]);
 
+  // Initial load with latest users
+  useEffect(() => {
+    dispatch(fetchUsers({ limit: 10, skip: 0, sort: '-createdAt' }));
+  }, [dispatch]);
+
   // Handle filter changes
   const handleFilterChange = (key: string, value: string) => {
     setFilters(prev => ({ ...prev, [key]: value }));
   };
 
-  // Apply filters
-  const applyFilters = () => {
-    setActiveFilters(filters);
-    setSkip(0); // Reset to first page
+  // Handle search
+  const handleSearch = () => {
     const params: Record<string, string | number | boolean> = { 
       limit: Number(filters.limit), 
-      skip: 0 
+      skip: 0,
+      sort: '-createdAt' // Always sort by latest
     };
     
     if (filters.searchTerm) params.q = filters.searchTerm;
@@ -67,6 +71,8 @@ export function UserList() {
     if (filters.dateFrom) params.dateFrom = filters.dateFrom;
     if (filters.dateTo) params.dateTo = filters.dateTo;
 
+    setActiveFilters(filters);
+    setSkip(0);
     dispatch(fetchUsers(params));
     setShowFilters(false);
   };
@@ -85,7 +91,7 @@ export function UserList() {
     setFilters(defaultFilters);
     setActiveFilters(defaultFilters);
     setSkip(0);
-    dispatch(fetchUsers({ limit: 10, skip: 0 }));
+    dispatch(fetchUsers({ limit: 10, skip: 0, sort: '-createdAt' }));
   };
 
   // Remove individual filter
@@ -100,7 +106,8 @@ export function UserList() {
     
     const params: Record<string, string | number | boolean> = { 
       limit: Number(newFilters.limit), 
-      skip: 0 
+      skip: 0,
+      sort: '-createdAt'
     };
     
     if (newFilters.searchTerm) params.q = newFilters.searchTerm;
@@ -118,7 +125,8 @@ export function UserList() {
     setSkip(newSkip);
     const params: Record<string, string | number | boolean> = { 
       limit: Number(activeFilters.limit), 
-      skip: newSkip 
+      skip: newSkip,
+      sort: '-createdAt'
     };
     
     if (activeFilters.searchTerm) params.q = activeFilters.searchTerm;
@@ -134,7 +142,7 @@ export function UserList() {
   return (
     <div className="space-y-6 p-4">
       <Card className="w-full bg-white rounded p-4">
-        {/* Universal Search Bar */}
+        {/* Search and Filters */}
         <div className="w-full mb-6">
           <div className="flex gap-2">
             <div className="relative flex-1">
@@ -144,10 +152,16 @@ export function UserList() {
                 placeholder="Search users by email, name..."
                 value={filters.searchTerm}
                 onChange={(e) => handleFilterChange('searchTerm', e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && applyFilters()}
+                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 className="w-full pl-10"
               />
             </div>
+            <Button
+              onClick={handleSearch}
+              className="bg-green-500 text-white hover:bg-green-600"
+            >
+              Search
+            </Button>
             <Button
               onClick={() => setShowFilters(!showFilters)}
               variant={showFilters ? "secondary" : "outline"}
@@ -255,7 +269,7 @@ export function UserList() {
               </div>
 
               <div className="flex gap-2 mt-4">
-                <Button onClick={applyFilters} className="bg-green-500 text-white hover:bg-green-600">
+                <Button onClick={handleSearch} className="bg-green-500 text-white hover:bg-green-600">
                   Apply Filters
                 </Button>
                 <Button onClick={() => setShowFilters(false)} variant="outline">
