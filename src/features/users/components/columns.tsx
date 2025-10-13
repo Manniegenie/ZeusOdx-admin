@@ -39,10 +39,6 @@ export const columns: ColumnDef<User>[] = [
     cell: info => (info.getValue() ? 'Yes' : 'No'),
   },
   {
-    accessorKey: "ngnbBalance",
-    header: "NGNB Balance",
-  },
-  {
     accessorKey: "createdAt",
     header: "Created At",
     cell: info => new Date(info.getValue() as string).toLocaleString(),
