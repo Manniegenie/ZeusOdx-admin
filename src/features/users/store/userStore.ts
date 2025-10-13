@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { userService } from '../services/userService';
-import type { User, GetUsersResponse } from '../types/user';
+import type { User } from '../types/user';
 
 interface UsersState {
   users: User[];
@@ -21,19 +21,30 @@ const initialState: UsersState = {
   error: null,
 };
 
+interface SearchUsersParams {
+  email?: string;
+  firstname?: string;
+  lastname?: string;
+  q?: string;
+  limit?: number;
+  page?: number;
+  sortBy?: 'email' | 'createdAt' | 'kycLevel' | 'firstname' | 'lastname';
+  sortOrder?: 'asc' | 'desc';
+}
+
 export const searchUsers = createAsyncThunk(
   'users/searchUsers',
-  async (params: {
-    email?: string;
-    firstname?: string;
-    lastname?: string;
-    q?: string;
-    limit?: number;
-    page?: number;
-    sortBy?: string;
-    sortOrder?: 'asc' | 'desc';
-  }) => {
-    const response = await userService.searchUsers(params);
+  async (params: SearchUsersParams) => {
+    const response = await userService.searchUsers({
+      ...params,
+      // Map frontend field names to API field names if needed
+      firstName: params.firstname,
+      lastName: params.lastname,
+      // Convert sortBy field names if needed
+      sortBy: params.sortBy === 'firstname' ? 'firstName' :
+              params.sortBy === 'lastname' ? 'lastName' :
+              params.sortBy
+    });
     return response;
   }
 );
