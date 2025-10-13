@@ -1,28 +1,37 @@
-import { useState, useEffect } from 'react';
-import type { User } from '../types/user';
-import { getAllUsers } from '../services/userService';
+import { create } from 'zustand';
+import { userService } from '../services/userService';
+import type { User } from '../hooks/useUserManagement';
 
-export const useUserStore = () => {
-  const [users, setUsers] = useState<User[]>([]);
-  const [total, setTotal] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+interface UserStore {
+  users: User[];
+  total: number;
+  loading: boolean;
+  error: string | null;
+  fetchUsers: () => Promise<void>;
+}
 
-  useEffect(() => {
-    setLoading(true);
-    getAllUsers()
-      .then((res) => {
-        setUsers(res.data.users);
-        setTotal(res.data.total);
-        setError(null);
-      })
-      .catch((err) => {
-        setError(err.message || 'Failed to fetch users');
-      })
-      .finally(() => {
-        setLoading(false);
+export const useUserStore = create<UserStore>((set) => ({
+  users: [],
+  total: 0,
+  loading: false,
+  error: null,
+  fetchUsers: async () => {
+    set({ loading: true, error: null });
+    try {
+      const response = await userService.searchUsers({
+        limit: 50,
+        page: 1,
+        sortBy: 'createdAt',
+        sortOrder: 'desc'
       });
-  }, []);
-
-  return { users, total, loading, error };
-};
+      set({
+        users: response.users,
+        total: response.meta.pagination.totalResults,
+        loading: false
+      });
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'An error occurred';
+      set({ error: errorMessage, loading: false });
+    }
+  }
+}));

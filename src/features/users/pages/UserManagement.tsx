@@ -2,12 +2,11 @@ import { useContext, useEffect } from 'react';
 import { DashboardTitleContext } from '@/layouts/DashboardTitleContext';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useUserManagement } from '../hooks/useUserManagement';
 import { DataTable } from '../components/UserTable';
 import { UserStatsCards } from '../components/UserStatsCards';
-import { Search, Filter, X } from 'lucide-react';
+import { Search } from 'lucide-react';
 import {
   Select,
   SelectContent,
@@ -22,10 +21,8 @@ export function UserManagement() {
     users,
     loading,
     stats,
-    searchParams,
-    pagination,
     updateSearchParams,
-    refreshUsers
+    pagination,
   } = useUserManagement();
 
   useEffect(() => {
