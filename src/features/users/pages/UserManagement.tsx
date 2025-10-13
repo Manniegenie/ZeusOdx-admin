@@ -17,6 +17,13 @@ import { searchUsers } from '../store/userStore';
 import type { RootState } from '@/core/store/store';
 import type { AppDispatch } from '@/core/store/store';
 
+type SortValue = 
+  | "createdAt-desc" | "createdAt-asc"
+  | "email-desc" | "email-asc"
+  | "kycLevel-desc" | "kycLevel-asc"
+  | "firstname-desc" | "firstname-asc"
+  | "lastname-desc" | "lastname-asc";
+
 export function UserManagement() {
   const titleCtx = useContext(DashboardTitleContext);
   const dispatch = useDispatch<AppDispatch>();
@@ -32,9 +39,12 @@ export function UserManagement() {
     dispatch(searchUsers({ q: value }));
   };
 
-  const handleSort = (value: string) => {
-    const [field, order] = value.split('-');
-    dispatch(searchUsers({ sortBy: field, sortOrder: order as 'asc' | 'desc' }));
+  const handleSort = (value: SortValue) => {
+    const [field, order] = value.split('-') as [
+      'email' | 'createdAt' | 'kycLevel' | 'firstname' | 'lastname',
+      'asc' | 'desc'
+    ];
+    dispatch(searchUsers({ sortBy: field, sortOrder: order }));
   };
 
   const handlePageChange = (page: number) => {
@@ -76,6 +86,10 @@ export function UserManagement() {
                   <SelectItem value="email-desc">Email Z-A</SelectItem>
                   <SelectItem value="kycLevel-desc">KYC Level (High-Low)</SelectItem>
                   <SelectItem value="kycLevel-asc">KYC Level (Low-High)</SelectItem>
+                  <SelectItem value="firstname-asc">First Name A-Z</SelectItem>
+                  <SelectItem value="firstname-desc">First Name Z-A</SelectItem>
+                  <SelectItem value="lastname-asc">Last Name A-Z</SelectItem>
+                  <SelectItem value="lastname-desc">Last Name Z-A</SelectItem>
                 </SelectContent>
               </Select>
             </div>
