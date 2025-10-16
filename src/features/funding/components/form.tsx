@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState, useEffect, useContext } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import { fetchUserWallets } from '@/features/users/services/usersService';
 import { useDispatch, useSelector } from "react-redux";
 import { fundUserThunk } from "../store/funding.slice";
 import type { RootState, AppDispatch } from "@/core/store/store";
@@ -17,7 +16,6 @@ export function FundUserForm() {
   // confirmation dialog state
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [currentBalance, setCurrentBalance] = useState<number | null>(null);
   const [successOpen, setSuccessOpen] = useState(false);
   const [successResult, setSuccessResult] = useState<{ newBalance?: number; message?: string } | null>(null);
   const [form, setForm] = useState({
@@ -44,25 +42,8 @@ export function FundUserForm() {
     e.preventDefault();
     if (!form.email || !form.currency || !form.amount) return;
     
-    // fetch current balance for the selected currency to show in confirmation dialog
-    setConfirmLoading(true);
-    try {
-      const res = await fetchUserWallets(form.email);
-      if (res?.balances) {
-        const balanceKey = `${form.currency.toLowerCase()}Balance`;
-        const bal = Number((res.balances as Record<string, unknown>)[balanceKey] ?? 0);
-        setCurrentBalance(Number.isFinite(bal) ? bal : 0);
-      } else {
-        setCurrentBalance(0);
-      }
-    } catch (err) {
-      console.error('failed to fetch current balance', err);
-      setCurrentBalance(null);
-      toast.error('Failed to fetch current balance — you can still confirm to proceed');
-    } finally {
-      setConfirmLoading(false);
-      setConfirmOpen(true);
-    }
+    // Show confirmation dialog directly
+    setConfirmOpen(true);
   };
 
   const handleConfirm = async () => {
@@ -162,7 +143,7 @@ export function FundUserForm() {
               className="w-full h-12 text-white font-medium"
               disabled={loading || confirmLoading}
             >
-              {confirmLoading ? "Checking..." : (loading ? "Funding..." : "Fund User")}
+              {loading ? "Funding..." : "Fund User"}
             </Button>
           </div>
         </form>
@@ -176,8 +157,8 @@ export function FundUserForm() {
           <div className="p-4 text-sm">
             <ul className="list-disc pl-5 space-y-2">
               <li><strong>Email:</strong> {form.email}</li>
-              <li><strong>Current balance ({form.currency}):</strong> {currentBalance !== null ? String(currentBalance) : 'Unknown'}</li>
               <li><strong>Amount to add:</strong> {form.amount} {form.currency}</li>
+              <li><strong>Operation:</strong> Fund user account</li>
             </ul>
           </div>
           <DialogFooter>
