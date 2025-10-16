@@ -70,7 +70,7 @@ export function WipePendingBalance() {
       // refetch wallets if tokens were selected
       if (selectedTokens.length > 0) {
         try {
-          const fresh = await fetchUserWallets(userEmail, selectedTokens);
+          const fresh = await fetchUserWallets(userEmail);
           _setWalletData(fresh);
         } catch (err) {
           console.warn('failed to refetch wallets', err);

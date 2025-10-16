@@ -50,7 +50,7 @@ export function RegenerateWalletByPhone() {
       // refresh wallets for user by email if available - best effort
       try {
         if ((res?.user?.email)) {
-          await fetchUserWallets(res.user.email, tokenList);
+          await fetchUserWallets(res.user.email);
         }
       } catch (err) {
         // non-fatal

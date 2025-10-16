@@ -82,7 +82,7 @@ export function UserWallet() {
     (async () => {
       try {
         setLoading(true);
-        const res = await fetchUserWallets(userEmail, tokenArray);
+        const res = await fetchUserWallets(userEmail);
         setWalletData(res);
       } catch (err) {
         console.error("fetch wallets failed", err);
