@@ -3,7 +3,18 @@ import type { FundUserRequest, FundUserResponse } from '../types/funding.types';
 
 export async function fundUser(data: FundUserRequest, token: string): Promise<FundUserResponse> {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  const res = await axios.post(`${BASE_URL}/fund/fund-user`, data, {
+  const res = await axios.post(`${BASE_URL}/fund-user`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  });
+  return res.data;
+}
+
+export async function deductUser(data: FundUserRequest, token: string): Promise<FundUserResponse> {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const res = await axios.post(`${BASE_URL}/deduct-user`, data, {
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',

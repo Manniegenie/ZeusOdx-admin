@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fundUser } from '../services/funding.service';
+import { fundUser, deductUser } from '../services/funding.service';
 import type { FundUserRequest, FundUserResponse } from '../types/funding.types';
 
 export const fundUserThunk = createAsyncThunk<FundUserResponse, FundUserRequest, { rejectValue: string }>(
@@ -9,9 +9,23 @@ export const fundUserThunk = createAsyncThunk<FundUserResponse, FundUserRequest,
       const token = localStorage.getItem('token');
       if (!token) throw new Error('No auth token');
       return await fundUser(data, token);
-    } catch (err: unknown) {
-  const message = err && typeof err === 'object' && 'message' in err ? (err as Record<string, unknown>).message : 'Funding failed';
-  return rejectWithValue(String(message ?? 'Funding failed'));
+    } catch (err: any) {
+      const message = err?.response?.data?.message || err?.message || 'Funding failed';
+      return rejectWithValue(String(message));
+    }
+  }
+);
+
+export const deductUserThunk = createAsyncThunk<FundUserResponse, FundUserRequest, { rejectValue: string }>(
+  'funding/deductUser',
+  async (data, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) throw new Error('No auth token');
+      return await deductUser(data, token);
+    } catch (err: any) {
+      const message = err?.response?.data?.message || err?.message || 'Deduction failed';
+      return rejectWithValue(String(message));
     }
   }
 );
@@ -44,6 +58,19 @@ const fundingSlice = createSlice({
         state.response = action.payload;
       })
       .addCase(fundUserThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(deductUserThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.response = null;
+      })
+      .addCase(deductUserThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.response = action.payload;
+      })
+      .addCase(deductUserThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
