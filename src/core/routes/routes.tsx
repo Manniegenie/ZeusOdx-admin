@@ -19,7 +19,6 @@ import { Disable2Fa } from '@/features/users/pages/Disable2Fa';
 import { RemovePassword } from '@/features/users/pages/RemovePassword';
 import { UserWallet } from '@/features/funding/pages/UserWallet';
 import { GiftCardRates } from '@/features/fees/pages/GiftCardRates';
-import { NgnMarkup } from '@/features/fees/pages/NgnMarkup';
 import { PriceCalculator } from '@/features/fees/pages/PriceCalculator';
 import { CreateNewAdmin } from '@/features/users/pages/CreateNewAdmin';
 import { WipePendingBalance } from '@/features/funding/pages/WipePendingBalance';
@@ -84,13 +83,12 @@ export const router = createBrowserRouter([
             path: 'fees-rates',
             element: <FeesAndRates />,
           },
-          { path: 'fees-rates/gift-card-rates',
+          { 
+            path: 'fees-rates/gift-card-rates',
             element: <GiftCardRates />,
           },
-          { path: 'fees-rates/ngn-markup',
-            element: <NgnMarkup />,
-          },
-          { path: 'fees-rates/price-calculator',
+          { 
+            path: 'fees-rates/price-calculator',
             element: <PriceCalculator />,
           },
           {
@@ -108,14 +106,6 @@ export const router = createBrowserRouter([
           {
             path: 'fees-rates/view/:currency/:network',
             element: <ViewFee />,
-          },
-          {
-            path: 'fees-rates/edit-fee',
-            element: <EditFee />,
-          },
-          {
-            path: 'fees-rates/edit-network-name',
-            element: <EditNetworkName />,
           },
           {
             path: 'fees-rates/search',
