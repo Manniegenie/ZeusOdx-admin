@@ -48,7 +48,7 @@ export async function removePasswordPin(email: string) : Promise<RemovePasswordR
   return res.data as RemovePasswordResponse;
 }
 
-export async function fetchUserWallets(email: string, tokens?: string[]) : Promise<FetchWalletsResponse> {
+export async function fetchUserWallets(email: string) : Promise<FetchWalletsResponse> {
   const token = localStorage.getItem('token');
   // For now, let's use a simpler approach that matches your backend pattern
   // You'll need to create this endpoint on your backend: GET /admin/users/wallets?email=user@example.com
