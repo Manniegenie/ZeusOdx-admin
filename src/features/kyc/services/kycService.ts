@@ -1,4 +1,4 @@
-import { apiClient } from '@/core/api/apiClient';
+import axios from '@/core/services/axios';
 import type { 
   KYCResponse, 
   KYCDetailsResponse, 
@@ -7,8 +7,10 @@ import type {
   FilterParams 
 } from '../types/kyc';
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 export class KYCService {
-  private static readonly BASE_URL = '/admin-kyc';
+  private static readonly API_BASE = '/admin-kyc';
 
   /**
    * Get KYC entries with filtering and pagination
@@ -27,7 +29,12 @@ export class KYCService {
       if (params.sortBy) queryParams.append('sortBy', params.sortBy);
       if (params.sortOrder) queryParams.append('sortOrder', params.sortOrder);
 
-      const response = await apiClient.get(`${this.BASE_URL}/list?${queryParams.toString()}`);
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${BASE_URL}${this.API_BASE}/list?${queryParams.toString()}`, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : undefined,
+        },
+      });
       return response.data;
     } catch (error) {
       console.error('Error fetching KYC entries:', error);
@@ -40,7 +47,12 @@ export class KYCService {
    */
   static async getKycDetails(kycId: string): Promise<KYCDetailsResponse> {
     try {
-      const response = await apiClient.get(`${this.BASE_URL}/details/${kycId}`);
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${BASE_URL}${this.API_BASE}/details/${kycId}`, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : undefined,
+        },
+      });
       return response.data;
     } catch (error) {
       console.error('Error fetching KYC details:', error);
@@ -53,11 +65,16 @@ export class KYCService {
    */
   static async approveKyc(phoneNumber: string, idType: string, idNumber: string, fullName?: string): Promise<any> {
     try {
-      const response = await apiClient.post(`${this.BASE_URL}/approve`, {
+      const token = localStorage.getItem('token');
+      const response = await axios.post(`${BASE_URL}${this.API_BASE}/approve`, {
         phoneNumber,
         idType,
         idNumber,
         fullName
+      }, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : undefined,
+        },
       });
       return response.data;
     } catch (error) {
@@ -71,9 +88,14 @@ export class KYCService {
    */
   static async cancelKyc(phoneNumber: string, reason?: string): Promise<any> {
     try {
-      const response = await apiClient.post(`${this.BASE_URL}/cancel`, {
+      const token = localStorage.getItem('token');
+      const response = await axios.post(`${BASE_URL}${this.API_BASE}/cancel`, {
         phoneNumber,
         reason
+      }, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : undefined,
+        },
       });
       return response.data;
     } catch (error) {
@@ -87,8 +109,13 @@ export class KYCService {
    */
   static async resetKyc(phoneNumber: string): Promise<any> {
     try {
-      const response = await apiClient.post(`${this.BASE_URL}/reset`, {
+      const token = localStorage.getItem('token');
+      const response = await axios.post(`${BASE_URL}${this.API_BASE}/reset`, {
         phoneNumber
+      }, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : undefined,
+        },
       });
       return response.data;
     } catch (error) {
@@ -102,7 +129,12 @@ export class KYCService {
    */
   static async upgradeKyc(request: KYCUpgradeRequest): Promise<KYCUpgradeResponse> {
     try {
-      const response = await apiClient.post(`${this.BASE_URL}/upgrade`, request);
+      const token = localStorage.getItem('token');
+      const response = await axios.post(`${BASE_URL}${this.API_BASE}/upgrade`, request, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : undefined,
+        },
+      });
       return response.data;
     } catch (error) {
       console.error('Error upgrading KYC:', error);

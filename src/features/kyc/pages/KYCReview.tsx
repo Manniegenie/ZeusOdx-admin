@@ -4,12 +4,12 @@ import { DashboardTitleContext } from '@/layouts/DashboardTitleContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, Filter, X, Eye, CheckCircle, XCircle, Clock, AlertCircle } from 'lucide-react';
+import { Search, Filter, X, CheckCircle, XCircle, Clock, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { KYCService } from '../services/kycService';
 import { KYCDataTable } from '../components/kyc-data-table';
 import { columns } from '../components/kyc-columns';
-import type { KYCEntry, KYCResponse, FilterParams } from '../types/kyc';
+import type { KYCEntry, FilterParams } from '../types/kyc';
 
 export function KYCReview() {
   const titleCtx = useContext(DashboardTitleContext);
@@ -41,7 +41,7 @@ export function KYCReview() {
 
   // Set page title
   useEffect(() => {
-    titleCtx.setTitle('KYC Review');
+    titleCtx?.setTitle('KYC Review');
   }, [titleCtx]);
 
   // Load KYC entries
@@ -101,7 +101,7 @@ export function KYCReview() {
 
   // Clear all filters
   const clearFilters = () => {
-    const clearedFilters = {
+    const clearedFilters: FilterParams = {
       searchTerm: '',
       status: '',
       idType: '',
@@ -137,37 +137,6 @@ export function KYCReview() {
     value !== '' && value !== 'createdAt' && value !== 'desc'
   ).length;
 
-  // Get status icon
-  const getStatusIcon = (status: string) => {
-    switch (status?.toLowerCase()) {
-      case 'approved':
-        return <CheckCircle className="w-4 h-4 text-green-500" />;
-      case 'rejected':
-        return <XCircle className="w-4 h-4 text-red-500" />;
-      case 'pending':
-        return <Clock className="w-4 h-4 text-yellow-500" />;
-      case 'provisional':
-        return <AlertCircle className="w-4 h-4 text-orange-500" />;
-      default:
-        return <Clock className="w-4 h-4 text-gray-500" />;
-    }
-  };
-
-  // Get status color
-  const getStatusColor = (status: string) => {
-    switch (status?.toLowerCase()) {
-      case 'approved':
-        return 'bg-green-100 text-green-800';
-      case 'rejected':
-        return 'bg-red-100 text-red-800';
-      case 'pending':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'provisional':
-        return 'bg-orange-100 text-orange-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
 
   return (
     <div className="w-full bg-white space-y-6 p-4 rounded">
