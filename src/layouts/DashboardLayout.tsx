@@ -15,6 +15,7 @@ import {
   MenuIcon,
   ChevronRightIcon,
   MoreVertical,
+  UserCheck,
 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -48,6 +49,11 @@ const navItems: NavItem[] = [
     title: 'User Management',
     path: '/users',
     icon: <Users className="w-5 h-5" />,
+  },
+  {
+    title: 'KYC Review',
+    path: '/kyc',
+    icon: <UserCheck className="w-5 h-5" />,
   },
   {
     title: 'Fees & Rates',

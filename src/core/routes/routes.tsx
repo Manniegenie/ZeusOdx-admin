@@ -25,6 +25,7 @@ import { WipePendingBalance } from '@/features/funding/pages/WipePendingBalance'
 import { WalletGenerateByPhone } from '@/features/users/pages/WalletGenerateByPhone';
 import { RegenerateWalletByPhone } from '@/features/users/pages/RegenerateWalletByPhone';
 import { Summary } from '@/features/users/pages/Summary';
+import { KYCReview } from '@/features/kyc/pages/KYCReview';
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
           {
             path: 'users',
             element: <UserList />,
+          },
+          {
+            path: 'kyc',
+            element: <KYCReview />,
           },
           {
             path: 'user-management/summary',
