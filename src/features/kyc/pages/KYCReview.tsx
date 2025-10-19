@@ -4,11 +4,10 @@ import { DashboardTitleContext } from '@/layouts/DashboardTitleContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, Filter, X, CheckCircle, XCircle, Clock, AlertCircle } from 'lucide-react';
+import { Search, Filter, X, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { KYCService } from '../services/kycService';
 import { KYCDataTable } from '../components/kyc-data-table';
-import { columns } from '../components/kyc-columns';
 import type { KYCEntry, FilterParams } from '../types/kyc';
 
 export function KYCReview() {
@@ -301,7 +300,6 @@ export function KYCReview() {
           ) : (
             <div ref={tableContainerRef} className="overflow-x-auto">
               <KYCDataTable
-                columns={columns}
                 data={kycEntries}
                 pagination={{
                   currentPage,

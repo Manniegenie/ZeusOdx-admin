@@ -1,11 +1,9 @@
-import React from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, RefreshCw, Eye } from 'lucide-react';
 import type { KYCEntry } from '../types/kyc';
 
 interface KYCDataTableProps {
-  columns: any[];
   data: KYCEntry[];
   pagination: {
     currentPage: number;
@@ -20,7 +18,6 @@ interface KYCDataTableProps {
 }
 
 export function KYCDataTable({
-  columns,
   data,
   pagination,
   onPageChange,
@@ -58,7 +55,7 @@ export function KYCDataTable({
   };
 
   // Helper function to format ID number (mask sensitive parts)
-  const formatIdNumber = (idNumber: string, idType: string) => {
+  const formatIdNumber = (idNumber: string) => {
     if (!idNumber) return 'N/A';
     
     // Show only first 4 and last 4 characters for security
@@ -135,7 +132,7 @@ export function KYCDataTable({
                 </TableCell>
                 <TableCell>
                   <div className="font-mono text-sm">
-                    {formatIdNumber(entry.idNumber, entry.frontendIdType)}
+                    {formatIdNumber(entry.idNumber)}
                   </div>
                 </TableCell>
                 <TableCell>

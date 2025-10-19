@@ -1,4 +1,4 @@
-import { ColumnDef } from '@tanstack/react-table';
+import type { ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
 import { Eye, CheckCircle, XCircle, Clock, AlertCircle } from 'lucide-react';
 import type { KYCEntry } from '../types/kyc';
