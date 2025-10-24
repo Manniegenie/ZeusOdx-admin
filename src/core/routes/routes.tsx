@@ -12,6 +12,7 @@ import { EditNetworkName } from '@/features/fees/pages/EditNetworkName';
 import { SearchFee } from '@/features/fees/pages/SearchFee';
 import { ViewFee } from '@/features/fees/pages/ViewFee';
 import { CryptoFeesManagement } from '@/features/fees/pages/CryptoFeesManagement';
+import { AddCryptoFee } from '@/features/fees/pages/AddCryptoFee';
 import { FundingAndBalances } from '@/features/funding/pages/FundingAndBalances';
 import { Security } from '@/features/security/pages/Security';
 import { AuditAndMonitoring } from '@/features/audit/pages/AuditAndMonitoring';
@@ -92,6 +93,10 @@ export const router = createBrowserRouter([
           {
             path: 'fees-rates/crypto-fees-management',
             element: <CryptoFeesManagement />,
+          },
+          {
+            path: 'fees-rates/add-crypto-fee',
+            element: <AddCryptoFee />,
           },
           { 
             path: 'fees-rates/gift-card-rates',

@@ -40,4 +40,15 @@ export const cryptoFeeService = {
     });
     return response.data;
   },
+
+  createCryptoFee: async (payload: { currency: string; network: string; networkName: string; networkFee: number }) => {
+    const token = localStorage.getItem('token');
+    const response = await axios.post<CryptoFeeUpdateResponse>(`${BASE_URL}/set-fee/crypto-fee`, payload, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token ? `Bearer ${token}` : undefined,
+      },
+    });
+    return response.data;
+  },
 };

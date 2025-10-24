@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Plus, Search, Edit } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -9,13 +10,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { DashboardTitleContext } from '@/layouts/DashboardTitleContext';
-import { fetchCryptoFees, updateCryptoFee, updateCryptoNetworkName } from '../store/cryptoFeeSlice';
+import { fetchCryptoFees, updateCryptoFee, updateCryptoNetworkName, createCryptoFee } from '../store/cryptoFeeSlice';
 import type { AppDispatch, RootState } from '@/core/store/store';
 import type { CryptoFee } from '../type/fee';
 import { toast } from 'sonner';
 
 export function CryptoFeesManagement() {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const { fees, loading, error } = useSelector((state: RootState) => state.cryptoFee);
   const titleCtx = useContext(DashboardTitleContext);
 
@@ -64,14 +66,7 @@ export function CryptoFeesManagement() {
   });
 
   const handleAddNew = () => {
-    setEditingFee(null);
-    setFormData({
-      currency: '',
-      network: '',
-      networkName: '',
-      networkFee: 0
-    });
-    setIsDialogOpen(true);
+    navigate('/fees-rates/add-crypto-fee');
   };
 
   const handleEdit = (fee: CryptoFee) => {
@@ -110,7 +105,7 @@ export function CryptoFeesManagement() {
         toast.success('Crypto fee updated successfully');
       } else {
         // Create new fee
-        await dispatch(updateCryptoFee({
+        await dispatch(createCryptoFee({
           currency: formData.currency,
           network: formData.network,
           networkName: formData.networkName,
@@ -154,7 +149,7 @@ export function CryptoFeesManagement() {
         </div>
         <Button onClick={handleAddNew} className="flex items-center gap-2">
           <Plus className="h-4 w-4" />
-          Add New Fee
+          Add New Crypto Fee
         </Button>
       </div>
 
@@ -277,7 +272,7 @@ export function CryptoFeesManagement() {
                       <div>
                         <div className="font-medium">{fee.networkName || 'Unnamed Network'}</div>
                         <div className="text-sm text-gray-500">
-                          Fee: {fee.networkFee} {fee.currency}
+                          Fee (USD): {fee.networkFee} {fee.currency}
                         </div>
                       </div>
                     </div>
@@ -354,7 +349,7 @@ export function CryptoFeesManagement() {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="networkFee">Network Fee</Label>
+              <Label htmlFor="networkFee">Network Fee (USD)</Label>
               <Input
                 id="networkFee"
                 type="number"

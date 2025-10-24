@@ -48,6 +48,14 @@ export const updateCryptoNetworkName = createAsyncThunk(
   }
 );
 
+export const createCryptoFee = createAsyncThunk(
+  'cryptoFee/createCryptoFee',
+  async (payload: { currency: string; network: string; networkName: string; networkFee: number }) => {
+    const response = await cryptoFeeService.createCryptoFee(payload);
+    return response;
+  }
+);
+
 const cryptoFeeSlice = createSlice({
   name: 'cryptoFee',
   initialState,
@@ -80,6 +88,22 @@ const cryptoFeeSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || 'Failed to fetch crypto fee';
         state.selectedFee = null;
+      });
+    builder
+      .addCase(createCryptoFee.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createCryptoFee.fulfilled, (state, action) => {
+        state.loading = false;
+        // Add the new fee to the list
+        if (action.payload?.data) {
+          state.fees.push(action.payload.data);
+        }
+      })
+      .addCase(createCryptoFee.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to create crypto fee';
       });
   },
 });

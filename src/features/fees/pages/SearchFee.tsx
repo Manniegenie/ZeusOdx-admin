@@ -132,7 +132,7 @@ export function SearchFee({ initialFee, loading = false, error, viewOnly = false
                 <span>{searchResult.networkName}</span>
               </div>
               <div className="flex justify-between">
-                <span className="font-medium">Fee:</span>
+                <span className="font-medium">Fee (USD):</span>
                 <span>{searchResult.networkFee}</span>
               </div>
             </div>
