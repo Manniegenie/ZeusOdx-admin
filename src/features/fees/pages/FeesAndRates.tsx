@@ -12,6 +12,7 @@ import { NumberInput } from '@/components/ui/number-input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
+import { Link } from 'react-router-dom';
 
 export function FeesAndRates() {
   const dispatch = useDispatch<AppDispatch>();
@@ -114,7 +115,19 @@ export function FeesAndRates() {
         </TabsList>
 
         <TabsContent value="crypto-fees" className="mt-6">
-          <div className="w-full">
+          <div className="w-full space-y-4">
+            <div className="flex justify-between items-center">
+              <div>
+                <h3 className="text-lg font-semibold">Crypto Fees</h3>
+                <p className="text-sm text-gray-600">Manage cryptocurrency network fees</p>
+              </div>
+              <Link to="/fees-rates/crypto-fees-management">
+                <Button variant="outline" className="flex items-center gap-2">
+                  <span>Advanced Management</span>
+                </Button>
+              </Link>
+            </div>
+            
             {loading ? (
               <div className="flex items-center justify-center w-full h-32">
                 <svg className="animate-spin h-8 w-8 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

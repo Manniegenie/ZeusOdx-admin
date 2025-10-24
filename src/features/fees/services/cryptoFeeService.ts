@@ -6,7 +6,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const cryptoFeeService = {
   getCryptoFees: async () => {
     const token = localStorage.getItem('token');
-    const response = await axios.get<CryptoFeesResponse>(`${BASE_URL}/set-fee/crypto-fee`, {
+    const response = await axios.get<CryptoFeesResponse>(`${BASE_URL}/set-fee/crypto-fees`, {
       headers: {
         Authorization: token ? `Bearer ${token}` : undefined,
       },
