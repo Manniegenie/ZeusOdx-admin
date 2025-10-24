@@ -121,11 +121,18 @@ export function FeesAndRates() {
                 <h3 className="text-lg font-semibold">Crypto Fees</h3>
                 <p className="text-sm text-gray-600">Manage cryptocurrency network fees</p>
               </div>
-              <Link to="/fees-rates/crypto-fees-management">
-                <Button variant="outline" className="flex items-center gap-2">
-                  <span>Advanced Management</span>
-                </Button>
-              </Link>
+              <div className="flex gap-2">
+                <Link to="/fees-rates/crypto-fees-management">
+                  <Button variant="outline" className="flex items-center gap-2">
+                    <span>Advanced Management</span>
+                  </Button>
+                </Link>
+                <Link to="/fees-rates/add-crypto-fee">
+                  <Button className="flex items-center gap-2">
+                    <span>Add New Fee</span>
+                  </Button>
+                </Link>
+              </div>
             </div>
             
             {loading ? (

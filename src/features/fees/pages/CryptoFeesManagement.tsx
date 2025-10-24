@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { DashboardTitleContext } from '@/layouts/DashboardTitleContext';
-import { fetchCryptoFees, updateCryptoFee, updateCryptoNetworkName, createCryptoFee } from '../store/cryptoFeeSlice';
+import { fetchCryptoFees, updateCryptoFee, updateCryptoNetworkName } from '../store/cryptoFeeSlice';
 import type { AppDispatch, RootState } from '@/core/store/store';
 import type { CryptoFee } from '../type/fee';
 import { toast } from 'sonner';
@@ -26,7 +26,7 @@ export function CryptoFeesManagement() {
   const [filterCurrency, setFilterCurrency] = useState('');
   const [filterNetwork, setFilterNetwork] = useState('');
 
-  // State for add/edit dialog
+  // State for edit dialog (only for editing existing fees)
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingFee, setEditingFee] = useState<CryptoFee | null>(null);
   const [formData, setFormData] = useState({
@@ -94,25 +94,19 @@ export function CryptoFeesManagement() {
     try {
       setSaving(true);
       
-      if (editingFee) {
-        // Update existing fee
-        await dispatch(updateCryptoFee({
-          currency: formData.currency,
-          network: formData.network,
-          networkName: formData.networkName,
-          networkFee: formData.networkFee
-        })).unwrap();
-        toast.success('Crypto fee updated successfully');
-      } else {
-        // Create new fee
-        await dispatch(createCryptoFee({
-          currency: formData.currency,
-          network: formData.network,
-          networkName: formData.networkName,
-          networkFee: formData.networkFee
-        })).unwrap();
-        toast.success('Crypto fee created successfully');
+      if (!editingFee) {
+        toast.error('No fee selected for editing');
+        return;
       }
+
+      // Update existing fee
+      await dispatch(updateCryptoFee({
+        currency: formData.currency,
+        network: formData.network,
+        networkName: formData.networkName,
+        networkFee: formData.networkFee
+      })).unwrap();
+      toast.success('Crypto fee updated successfully');
       
       dispatch(fetchCryptoFees());
       setIsDialogOpen(false);
@@ -311,7 +305,7 @@ export function CryptoFeesManagement() {
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle>
-              {editingFee ? 'Edit Crypto Fee' : 'Add New Crypto Fee'}
+              Edit Crypto Fee
             </DialogTitle>
           </DialogHeader>
           
@@ -374,7 +368,7 @@ export function CryptoFeesManagement() {
                 disabled={saving}
                 className="flex-1"
               >
-                {saving ? 'Saving...' : editingFee ? 'Update' : 'Create'}
+                {saving ? 'Updating...' : 'Update Fee'}
               </Button>
             </div>
           </div>
