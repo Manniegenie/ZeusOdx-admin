@@ -266,7 +266,7 @@ export function CryptoFeesManagement() {
                       <div>
                         <div className="font-medium">{fee.networkName || 'Unnamed Network'}</div>
                         <div className="text-sm text-gray-500">
-                          Fee (USD): {fee.networkFee} {fee.currency}
+                          Fee ({fee.currency}): {fee.networkFee} {fee.currency}
                         </div>
                       </div>
                     </div>
@@ -343,7 +343,7 @@ export function CryptoFeesManagement() {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="networkFee">Network Fee (USD)</Label>
+              <Label htmlFor="networkFee">Network Fee ({formData.currency || 'Token'})</Label>
               <Input
                 id="networkFee"
                 type="number"

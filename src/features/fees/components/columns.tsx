@@ -62,7 +62,11 @@ export const columns: ColumnDef<CryptoFee>[] = [
   },
   {
     accessorKey: "networkFee",
-    header: "Fee (USD)",
+    header: "Fee (Token)",
+    cell: ({ row }) => {
+      const fee = row.original as CryptoFee;
+      return `${fee.networkFee} ${fee.currency}`;
+    },
   },
   {
     id: "actions",

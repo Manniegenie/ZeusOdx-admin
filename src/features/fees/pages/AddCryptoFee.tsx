@@ -107,7 +107,7 @@ export function AddCryptoFee() {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="networkFee">Network Fee (USD) *</Label>
+              <Label htmlFor="networkFee">Network Fee ({formData.currency || 'Token'}) *</Label>
               <Input
                 id="networkFee"
                 type="number"
