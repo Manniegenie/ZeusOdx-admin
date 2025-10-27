@@ -108,7 +108,7 @@ export function EditFee() {
               />
             </div>
             <div className="w-full space-y-2">
-              <Label className="text-sm font-medium text-gray-500" htmlFor="fees">Fee ({currency})</Label>
+              <Label className="text-sm font-medium text-gray-500" htmlFor="fees">Fee ({selectedCurrency || 'Token'})</Label>
               <Input
                 type="number"
                 name="fees"
