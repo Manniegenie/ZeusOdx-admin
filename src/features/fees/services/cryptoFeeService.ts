@@ -51,4 +51,14 @@ export const cryptoFeeService = {
     });
     return response.data;
   },
+
+  deleteCryptoFee: async (currency: string, network: string) => {
+    const token = localStorage.getItem('token');
+    const response = await axios.delete<CryptoFeeUpdateResponse>(`${BASE_URL}/set-fee/crypto-fee/${encodeURIComponent(currency)}/${encodeURIComponent(network)}`, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : undefined,
+      },
+    });
+    return response.data;
+  },
 };

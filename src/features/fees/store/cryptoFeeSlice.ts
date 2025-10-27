@@ -56,6 +56,14 @@ export const createCryptoFee = createAsyncThunk(
   }
 );
 
+export const deleteCryptoFee = createAsyncThunk(
+  'cryptoFee/deleteCryptoFee',
+  async ({ currency, network }: { currency: string; network: string }) => {
+    const response = await cryptoFeeService.deleteCryptoFee(currency, network);
+    return { response, currency, network };
+  }
+);
+
 const cryptoFeeSlice = createSlice({
   name: 'cryptoFee',
   initialState,
@@ -104,6 +112,22 @@ const cryptoFeeSlice = createSlice({
       .addCase(createCryptoFee.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Failed to create crypto fee';
+      });
+    builder
+      .addCase(deleteCryptoFee.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteCryptoFee.fulfilled, (state, action) => {
+        state.loading = false;
+        // Remove the deleted fee from the list
+        state.fees = state.fees.filter(
+          fee => !(fee.currency === action.payload.currency && fee.network === action.payload.network)
+        );
+      })
+      .addCase(deleteCryptoFee.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to delete crypto fee';
       });
   },
 });
