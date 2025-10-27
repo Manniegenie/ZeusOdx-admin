@@ -266,7 +266,7 @@ export function CryptoFeesManagement() {
                       <div>
                         <div className="font-medium">{fee.networkName || 'Unnamed Network'}</div>
                         <div className="text-sm text-gray-500">
-                          Fee ({fee.currency}): {fee.networkFee} {fee.currency}
+                          Fee ({fee.currency}): {fee.networkFee}
                         </div>
                       </div>
                     </div>

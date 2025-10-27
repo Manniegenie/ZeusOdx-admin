@@ -65,7 +65,7 @@ export const columns: ColumnDef<CryptoFee>[] = [
     header: "Fee (Token)",
     cell: ({ row }) => {
       const fee = row.original as CryptoFee;
-      return `${fee.networkFee} ${fee.currency}`;
+      return fee.networkFee;
     },
   },
   {
