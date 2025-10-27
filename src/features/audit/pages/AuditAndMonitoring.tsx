@@ -64,7 +64,7 @@ export function AuditAndMonitoring() {
               <input
                 type="text"
                 placeholder="Search logs..."
-                className="pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                className="pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-white bg-transparent"
               />
             </div>
           </div>

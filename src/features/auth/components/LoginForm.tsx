@@ -50,7 +50,7 @@ export function LoginForm() {
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            className="pl-10 h-12 border border-gray-200 shadow-none dark:text-black"
+            className="pl-10 h-12 border border-gray-200 shadow-none text-white"
             required
           />
         </div>
@@ -62,7 +62,7 @@ export function LoginForm() {
             placeholder="Password"
             value={formData.passwordPin}
             onChange={handleChange}
-            className="pl-10 h-12 border border-gray-200 shadow-none dark:text-black"
+            className="pl-10 h-12 border border-gray-200 shadow-none text-white"
             required
           />
           <button

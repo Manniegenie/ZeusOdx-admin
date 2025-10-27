@@ -33,7 +33,7 @@ export function ResetPasswordForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email"
-          className="pl-10 h-12 border border-gray-200 shadow-none dark:text-black"
+          className="pl-10 h-12 border border-gray-200 shadow-none text-white"
           required
         />
       </div>

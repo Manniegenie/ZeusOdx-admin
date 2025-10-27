@@ -219,7 +219,7 @@ export function Dashboard() {
               value={filters.searchTerm}
               onChange={(e) => handleFilterChange('searchTerm', e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && applyFilters()}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-white bg-transparent"
             />
           </div>
           <button
@@ -257,7 +257,7 @@ export function Dashboard() {
                   type="date"
                   value={filters.dateFrom}
                   onChange={(e) => handleFilterChange('dateFrom', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-white bg-transparent"
                 />
               </div>
 
@@ -268,7 +268,7 @@ export function Dashboard() {
                   type="date"
                   value={filters.dateTo}
                   onChange={(e) => handleFilterChange('dateTo', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-white bg-transparent"
                 />
               </div>
 
@@ -278,7 +278,7 @@ export function Dashboard() {
                 <select
                   value={filters.transactionType}
                   onChange={(e) => handleFilterChange('transactionType', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-white bg-transparent"
                 >
                   <option value="">All Types</option>
                   <option value="SWAP">Swap</option>
@@ -297,7 +297,7 @@ export function Dashboard() {
                 <select
                   value={filters.transactionStatus}
                   onChange={(e) => handleFilterChange('transactionStatus', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-white bg-transparent"
                 >
                   <option value="">All Status</option>
                   <option value="SUCCESSFUL">Successful</option>
@@ -314,7 +314,7 @@ export function Dashboard() {
                 <select
                   value={filters.userVerificationStatus}
                   onChange={(e) => handleFilterChange('userVerificationStatus', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-white bg-transparent"
                 >
                   <option value="">All Users</option>
                   <option value="emailVerified">Email Verified</option>
@@ -332,7 +332,7 @@ export function Dashboard() {
                   placeholder="e.g. USDT, BTC"
                   value={filters.currency}
                   onChange={(e) => handleFilterChange('currency', e.target.value.toUpperCase())}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-white bg-transparent"
                 />
               </div>
 
@@ -344,7 +344,7 @@ export function Dashboard() {
                   placeholder="0"
                   value={filters.minAmount}
                   onChange={(e) => handleFilterChange('minAmount', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-white bg-transparent"
                 />
               </div>
 
@@ -356,7 +356,7 @@ export function Dashboard() {
                   placeholder="∞"
                   value={filters.maxAmount}
                   onChange={(e) => handleFilterChange('maxAmount', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-white bg-transparent"
                 />
               </div>
             </div>

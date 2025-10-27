@@ -520,7 +520,7 @@ export const GiftDataTable: React.FC<GiftDataTableProps> = ({
                   value={form.cardType}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-white bg-transparent"
                   disabled={giftLoading}
                   aria-label="Card Type"
                   title="Select a card type"
@@ -538,7 +538,7 @@ export const GiftDataTable: React.FC<GiftDataTableProps> = ({
                   value={form.country}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-white bg-transparent"
                   disabled={giftLoading}
                   aria-label="Country"
                   title="Select a country"
@@ -558,7 +558,7 @@ export const GiftDataTable: React.FC<GiftDataTableProps> = ({
                 value={form.rate}
                 onChange={handleChange}
                 required
-                className="w-full border border-gray-300 rounded px-3 py-2"
+                className="w-full border border-gray-300 rounded px-3 py-2 text-white bg-transparent"
                 min={0}
                 disabled={giftLoading}
                 aria-label="Base rate"
@@ -574,7 +574,7 @@ export const GiftDataTable: React.FC<GiftDataTableProps> = ({
                   value={form.physicalRate}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-white bg-transparent"
                   min={0}
                   disabled={giftLoading}
                   aria-label="Physical rate"
@@ -589,7 +589,7 @@ export const GiftDataTable: React.FC<GiftDataTableProps> = ({
                   value={form.ecodeRate}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-white bg-transparent"
                   min={0}
                   disabled={giftLoading}
                   aria-label="E-code rate"
@@ -606,7 +606,7 @@ export const GiftDataTable: React.FC<GiftDataTableProps> = ({
                   value={form.minAmount}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-white bg-transparent"
                   min={0}
                   disabled={giftLoading}
                   aria-label="Minimum amount"
@@ -621,7 +621,7 @@ export const GiftDataTable: React.FC<GiftDataTableProps> = ({
                   value={form.maxAmount}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-white bg-transparent"
                   min={0}
                   disabled={giftLoading}
                   aria-label="Maximum amount"
@@ -635,7 +635,7 @@ export const GiftDataTable: React.FC<GiftDataTableProps> = ({
                 name="notes"
                 value={form.notes}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded px-3 py-2"
+                className="w-full border border-gray-300 rounded px-3 py-2 text-white bg-transparent"
                 rows={3}
                 disabled={giftLoading}
               />
