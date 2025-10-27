@@ -19,7 +19,7 @@ export function AddCryptoFee() {
     currency: '',
     network: '',
     networkName: '',
-    networkFee: 0
+    networkFee: ''
   });
   const [saving, setSaving] = useState(false);
 
@@ -34,7 +34,7 @@ export function AddCryptoFee() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.currency || !formData.network || formData.networkFee < 0) {
+    if (!formData.currency || !formData.network || !formData.networkFee || parseFloat(formData.networkFee) < 0) {
       toast.error('Please fill in all required fields');
       return;
     }
@@ -46,7 +46,7 @@ export function AddCryptoFee() {
         currency: formData.currency,
         network: formData.network,
         networkName: formData.networkName,
-        networkFee: formData.networkFee
+        networkFee: parseFloat(formData.networkFee)
       })).unwrap();
       
       toast.success('Crypto fee created successfully');
@@ -114,7 +114,7 @@ export function AddCryptoFee() {
                 step="0.000001"
                 min="0"
                 value={formData.networkFee}
-                onChange={(e) => setFormData(prev => ({ ...prev, networkFee: parseFloat(e.target.value) || 0 }))}
+                onChange={(e) => setFormData(prev => ({ ...prev, networkFee: e.target.value }))}
                 placeholder="0.001"
                 required
               />

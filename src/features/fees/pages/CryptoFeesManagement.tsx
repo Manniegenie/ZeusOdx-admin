@@ -33,7 +33,7 @@ export function CryptoFeesManagement() {
     currency: '',
     network: '',
     networkName: '',
-    networkFee: 0
+    networkFee: ''
   });
   const [saving, setSaving] = useState(false);
 
@@ -86,7 +86,7 @@ export function CryptoFeesManagement() {
       return;
     }
 
-    if (formData.networkFee < 0) {
+    if (!formData.networkFee || parseFloat(formData.networkFee) < 0) {
       toast.error('Network fee must be a non-negative number');
       return;
     }
@@ -104,7 +104,7 @@ export function CryptoFeesManagement() {
         currency: formData.currency,
         network: formData.network,
         networkName: formData.networkName,
-        networkFee: formData.networkFee
+        networkFee: parseFloat(formData.networkFee)
       })).unwrap();
       toast.success('Crypto fee updated successfully');
       
@@ -350,7 +350,7 @@ export function CryptoFeesManagement() {
                 step="0.000001"
                 min="0"
                 value={formData.networkFee}
-                onChange={(e) => setFormData(prev => ({ ...prev, networkFee: parseFloat(e.target.value) || 0 }))}
+                onChange={(e) => setFormData(prev => ({ ...prev, networkFee: e.target.value }))}
                 placeholder="0.001"
               />
             </div>
