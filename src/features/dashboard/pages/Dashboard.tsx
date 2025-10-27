@@ -406,9 +406,9 @@ export function Dashboard() {
               </span>
             )}
             {activeFilters.transactionType && (
-              <span className="inline-flex items-center gap-1 px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-purple-600 text-white rounded-full text-sm">
                 Type: {activeFilters.transactionType}
-                <button onClick={() => removeFilter('transactionType')} className="hover:bg-purple-200 rounded-full p-0.5">
+                <button onClick={() => removeFilter('transactionType')} className="hover:bg-purple-700 rounded-full p-0.5">
                   <X className="h-3 w-3" />
                 </button>
               </span>
