@@ -67,7 +67,7 @@ export function EditFee() {
         <CardContent className="py-6 px-4">
           <div className="w-full py-8 flex flex-col justify-center items-start gap-8">
             <div className="w-full space-y-2">
-              <Label className="text-sm font-medium text-gray-300" htmlFor="currency">Currency</Label>
+              <Label className="text-sm font-medium text-gray-500" htmlFor="currency">Currency</Label>
               <Select value={selectedCurrency} onValueChange={setSelectedCurrency}>
                 <SelectTrigger className='w-full border border-gray-300 py-6'>
                   <SelectValue placeholder="Select Currency" />
@@ -82,7 +82,7 @@ export function EditFee() {
               </Select>
             </div>
             <div className="w-full space-y-2">
-              <Label className="text-sm font-medium text-gray-300" htmlFor="network">Network</Label>
+              <Label className="text-sm font-medium text-gray-500" htmlFor="network">Network</Label>
               <Select value={selectedNetwork} onValueChange={setSelectedNetwork}>
                 <SelectTrigger className='w-full border border-gray-300 py-6'>
                   <SelectValue placeholder="Select Network" />
@@ -98,7 +98,7 @@ export function EditFee() {
             </div>
 
             <div className="w-full space-y-2">
-              <Label className="text-sm font-medium text-gray-300" htmlFor="networkName">Network name</Label>
+              <Label className="text-sm font-medium text-gray-500" htmlFor="networkName">Network name</Label>
               <Input
                 type="text"
                 name="networkName"
@@ -108,7 +108,7 @@ export function EditFee() {
               />
             </div>
             <div className="w-full space-y-2">
-              <Label className="text-sm font-medium text-gray-300" htmlFor="fees">Fee (USD)</Label>
+              <Label className="text-sm font-medium text-gray-500" htmlFor="fees">Fee (USD)</Label>
               <Input
                 type="number"
                 name="fees"
