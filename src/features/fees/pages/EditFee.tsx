@@ -22,7 +22,7 @@ export function EditFee() {
 
   const [selectedCurrency, setSelectedCurrency] = useState<string>(stateFee?.currency ?? '');
   const [selectedNetwork, setSelectedNetwork] = useState<string>(stateFee?.network ?? '');
-  const [networkFee, setNetworkFee] = useState<number>(stateFee?.networkFee ?? 0);
+  const [networkFee, setNetworkFee] = useState<string>(stateFee?.networkFee?.toString() ?? '');
   const [networkName, setNetworkName] = useState<string>(stateFee?.networkName ?? '');
   const [saving, setSaving] = useState(false);
 
@@ -41,13 +41,13 @@ export function EditFee() {
   const handleSave = async () => {
     const currency = selectedCurrency.trim();
     const network = selectedNetwork.trim();
-    if (!currency || !network) {
-      toast.error('Please select currency and network');
+    if (!currency || !network || !networkFee || parseFloat(networkFee) < 0) {
+      toast.error('Please fill in all required fields');
       return;
     }
     try {
       setSaving(true);
-      const payload = { currency, network, networkName: networkName.trim(), networkFee };
+      const payload = { currency, network, networkName: networkName.trim(), networkFee: parseFloat(networkFee) };
   // dispatch thunk and unwrap (unwrap will throw if rejected)
   await dispatch(updateCryptoFee(payload)).unwrap();
       toast.success('Crypto fee updated');
@@ -113,7 +113,7 @@ export function EditFee() {
                 type="number"
                 name="fees"
                 value={networkFee}
-                onChange={(e) => setNetworkFee(Number(e.target.value))}
+                onChange={(e) => setNetworkFee(e.target.value)}
                 className="w-full py-6 border-gray-300"
               />
             </div>
