@@ -75,7 +75,7 @@ export function CryptoFeesManagement() {
       currency: fee.currency,
       network: fee.network,
       networkName: fee.networkName,
-      networkFee: fee.networkFee
+      networkFee: fee.networkFee.toString()
     });
     setIsDialogOpen(true);
   };
