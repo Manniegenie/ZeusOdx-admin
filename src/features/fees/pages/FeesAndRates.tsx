@@ -119,7 +119,7 @@ export function FeesAndRates() {
             <div className="flex justify-between items-center">
               <div>
                 <h3 className="text-lg font-semibold">Crypto Fees</h3>
-                <p className="text-sm text-gray-600">Manage cryptocurrency network fees</p>
+                <p className="text-sm text-gray-300">Manage cryptocurrency network fees</p>
               </div>
               <div className="flex gap-2">
                 <Link to="/fees-rates/crypto-fees-management">
@@ -162,7 +162,7 @@ export function FeesAndRates() {
                 <div className="w-fit h-fit py-1 px-3 rounded-full bg-white/50 text-primary absolute top-5 right-5 text-[11px]">Source: Manual</div>
               </div>
               <div className="flex flex-col gap-2 mb-4">
-                <Label className="text-gray-800">New Rate (N per unit)</Label>
+                <Label className="text-gray-300">New Rate (N per unit)</Label>
                 <NumberInput 
                   value={onrampInput} 
                   onChange={(e) => setOnrampInput(e.target.value)} 
@@ -170,7 +170,7 @@ export function FeesAndRates() {
                   placeholder="N0" 
                   className="w-full mt-2 p-3 h-10 border border-gray-300 rounded" 
                 />
-                <span className="text-gray-800 text-xs">Positive number only</span>
+                <span className="text-gray-300 text-xs">Positive number only</span>
               </div>
               <Button 
                 variant='default' 
@@ -194,7 +194,7 @@ export function FeesAndRates() {
                 <div className="w-fit h-fit py-1 px-3 rounded-full bg-white/50 text-primary absolute top-5 right-5 text-[11px]">Source: Manual</div>
               </div>
               <div className="flex flex-col gap-2 mb-4">
-                <Label className="text-gray-800">New Rate (N per unit)</Label>
+                <Label className="text-gray-300">New Rate (N per unit)</Label>
                 <NumberInput 
                   value={offrampInput} 
                   onChange={(e) => setOfframpInput(e.target.value)} 
@@ -202,7 +202,7 @@ export function FeesAndRates() {
                   placeholder="N0" 
                   className="w-full mt-2 p-3 h-10 border border-gray-300 rounded" 
                 />
-                <span className="text-gray-800 text-xs">Positive number only</span>
+                <span className="text-gray-300 text-xs">Positive number only</span>
               </div>
               <Button 
                 variant='default' 

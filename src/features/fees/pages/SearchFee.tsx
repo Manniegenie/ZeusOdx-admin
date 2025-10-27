@@ -100,7 +100,7 @@ export function SearchFee({ initialFee, loading = false, error, viewOnly = false
               </Button>
             )}
             {viewOnly && loading && (
-              <div className="text-sm text-gray-500">Loading fee…</div>
+              <div className="text-sm text-gray-300">Loading fee…</div>
             )}
           </div>
         </CardContent>

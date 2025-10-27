@@ -138,8 +138,8 @@ export function CryptoFeesManagement() {
       {/* Header with Add Button */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Crypto Fees Management</h1>
-          <p className="text-gray-600">Manage cryptocurrency network fees and settings</p>
+          <h1 className="text-2xl font-bold text-white">Crypto Fees Management</h1>
+          <p className="text-gray-300">Manage cryptocurrency network fees and settings</p>
         </div>
         <Button onClick={handleAddNew} className="flex items-center gap-2">
           <Plus className="h-4 w-4" />
@@ -244,7 +244,7 @@ export function CryptoFeesManagement() {
           {filteredFees.length === 0 ? (
             <Card>
               <CardContent className="p-6">
-                <div className="text-center text-gray-500">
+                <div className="text-center text-gray-300">
                   {fees.length === 0 ? 'No crypto fees found' : 'No fees match your search criteria'}
                 </div>
               </CardContent>
@@ -265,7 +265,7 @@ export function CryptoFeesManagement() {
                       </div>
                       <div>
                         <div className="font-medium">{fee.networkName || 'Unnamed Network'}</div>
-                        <div className="text-sm text-gray-500">
+                        <div className="text-sm text-gray-300">
                           Fee (USD): {fee.networkFee} {fee.currency}
                         </div>
                       </div>

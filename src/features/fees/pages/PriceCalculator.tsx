@@ -69,11 +69,11 @@ export function PriceCalculator() {
             </TabsList>
             <TabsContent value="ngn-markup" className="border border-gray-200 shadow-none p-8 rounded w-full">
               <div className="flex flex-col gap-0 mb-6">
-                <Label className="text-gray-500">Original Price</Label>
+                <Label className="text-gray-300">Original Price</Label>
                 <NumberInput value={calcOriginal} onChange={(e) => setCalcOriginal(e.target.value)} allowDecimal placeholder="N0" className="w-full mt-2 p-3 h-10 border border-gray-300 rounded" />
               </div>
               <div className="flex flex-col gap-0 mb-4">
-                <Label className="text-gray-500">Asset Label</Label>
+                <Label className="text-gray-300">Asset Label</Label>
                 <Input value={calcAsset} onChange={(e) => setCalcAsset(e.target.value)} placeholder="Bitcoin" className="w-full mt-2 p-3 h-10 border border-gray-300 rounded" />
               </div>
               <div className="bg-purple-100 border border-purple-300 rounded-lg p-4">
@@ -84,7 +84,7 @@ export function PriceCalculator() {
                       <span className="text-xs">Calculated at {new Date(assetState.lastCalculation.calculatedAt ?? '').toLocaleString()}</span>
                     </div>
                     <div className="border-b border-purple-300 py-4 text-xs flex items-center justify-between">
-                      <div className="w-1/3 flex flex-col justify-between gap-6 text-gray-600">
+                      <div className="w-1/3 flex flex-col justify-between gap-6 text-gray-300">
                         <div className="w-full flex justify-between">
                           <span>Original Price:</span>
                           <span>N{Number(assetState.lastCalculation.originalPrice).toLocaleString()}</span>
@@ -94,7 +94,7 @@ export function PriceCalculator() {
                           <span>-N{Number(assetState.lastCalculation.discountAmount).toLocaleString()}</span>
                         </div>
                       </div>
-                      <div className="w-1/3 flex flex-col justify-between gap-6 text-gray-600">
+                      <div className="w-1/3 flex flex-col justify-between gap-6 text-gray-300">
                         <div className="w-full flex justify-between">
                           <span>Markdown %:</span>
                           <span>{assetState.lastCalculation.formattedPercentage ?? `${assetState.lastCalculation.markdownPercentage}%`}</span>
@@ -111,7 +111,7 @@ export function PriceCalculator() {
                     </div>
                   </>
                 ) : (
-                  <div className="text-sm text-gray-600">No calculation yet. Enter values and click Calculate.</div>
+                  <div className="text-sm text-gray-300">No calculation yet. Enter values and click Calculate.</div>
                 )}
               </div>
               <Button className="mt-6 bg-primary hover:bg-primary/90 text-white" onClick={async () => {
@@ -146,13 +146,13 @@ export function PriceCalculator() {
                 </div>
               </div>
               <div className="flex flex-col gap-2 mb-4">
-                <Label className="text-gray-500">Markdown percentage (0-100)</Label>
+                <Label className="text-gray-300">Markdown percentage (0-100)</Label>
                 <NumberInput value={markdownInput} onChange={(e) => setMarkdownInput(e.target.value)} allowDecimal placeholder="12.5" className="w-full mt-2 p-3 h-10 border border-gray-300 rounded" />
               </div>
               <div className="flex flex-col gap-2 mb-4">
-                <Label className="text-gray-500">Description/Notes</Label>
+                <Label className="text-gray-300">Description/Notes</Label>
                 <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="" className="w-full mt-2 p-3 h-10 border border-gray-300 rounded"></Textarea>
-                <span className="text-gray-500 text-[11px]">Affects all assets system-wide</span>
+                <span className="text-gray-300 text-[11px]">Affects all assets system-wide</span>
               </div>
               <div className="flex gap-2">
                 <Button variant='default' className="flex-1 bg-primary h-10 text-white" onClick={async () => {
@@ -224,7 +224,7 @@ export function PriceCalculator() {
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 mb-4">
-                  <Label className="text-gray-500">
+                  <Label className="text-gray-300">
                     Markdown percentage (0-100)
                   </Label>
                   <NumberInput
@@ -234,12 +234,12 @@ export function PriceCalculator() {
                   />
                 </div>
                 <div className="flex flex-col gap-2 mb-4">
-                  <Label className="text-gray-500">Description/Notes</Label>
+                  <Label className="text-gray-300">Description/Notes</Label>
                   <Textarea
                     placeholder=""
                     className="w-full mt-2 p-3 h-10 border border-gray-300 rounded"
                   ></Textarea>
-                  <span className="text-gray-500 text-[11px]">
+                  <span className="text-gray-300 text-[11px]">
                     Affects all assets system-wide
                   </span>
                 </div>
@@ -253,7 +253,7 @@ export function PriceCalculator() {
               <div className="border border-gray-200 shadow-none p-8 rounded">
                 <h4 className="text-base font-semibold pb-6">Test / Apply Markdown</h4>
                 <div className="flex flex-col gap-0 mb-6">
-                  <Label className="text-gray-500">Amount</Label>
+                  <Label className="text-gray-300">Amount</Label>
                   <Input
                     placeholder="Enter amount"
                     className="w-full mt-2 p-3 h-10 border border-gray-300 rounded"
