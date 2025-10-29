@@ -29,6 +29,7 @@ import { RegenerateWalletByPhone } from '@/features/users/pages/RegenerateWallet
 import { Summary } from '@/features/users/pages/Summary';
 import { KYCReview } from '@/features/kyc/pages/KYCReview';
 import { NotificationsManagement } from '@/features/notifications/pages/NotificationsManagement';
+import { ScheduledNotifications } from '@/features/notifications/pages/ScheduledNotifications';
 
 export const router = createBrowserRouter([
   {
@@ -142,6 +143,10 @@ export const router = createBrowserRouter([
           {
             path: 'notifications',
             element: <NotificationsManagement />,
+          },
+          {
+            path: 'scheduled-notifications',
+            element: <ScheduledNotifications />,
           },
           {
             path: 'settings',
