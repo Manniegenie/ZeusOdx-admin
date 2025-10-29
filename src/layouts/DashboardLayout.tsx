@@ -17,6 +17,7 @@ import {
   MoreVertical,
   UserCheck,
   Bell,
+  Zap,
 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -67,6 +68,14 @@ const navItems: NavItem[] = [
     ]
   },
   {
+    title: 'Features',
+    path: '/features',
+    icon: <Zap className="w-5 h-5" />,
+    sub_menu: [
+      { title: 'Push Notifications', path: '/notifications' },
+    ]
+  },
+  {
     title: 'Funding & Balances',
     path: '/funding',
     icon: <Wallet className="w-5 h-5" />,
@@ -80,11 +89,6 @@ const navItems: NavItem[] = [
     title: 'Audit & Monitoring',
     path: '/audit',
     icon: <LineChart className="w-5 h-5" />,
-  },
-  {
-    title: 'Notifications',
-    path: '/notifications',
-    icon: <Bell className="w-5 h-5" />,
   },
   {
     title: 'Settings',
