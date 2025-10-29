@@ -16,6 +16,7 @@ import {
   ChevronRightIcon,
   MoreVertical,
   UserCheck,
+  Bell,
 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -79,6 +80,11 @@ const navItems: NavItem[] = [
     title: 'Audit & Monitoring',
     path: '/audit',
     icon: <LineChart className="w-5 h-5" />,
+  },
+  {
+    title: 'Notifications',
+    path: '/notifications',
+    icon: <Bell className="w-5 h-5" />,
   },
   {
     title: 'Settings',

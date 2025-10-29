@@ -9,7 +9,8 @@ import { toast } from 'sonner'
 import type { DashboardAnalyticsResponse, Transaction } from '../type/analytic';
 import { DataTable } from '../components/data-table';
 import { columns } from '../components/columns';
-import { Search, X, Filter } from 'lucide-react';
+import { Search, X, Filter, Bell, Send } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export function Dashboard() {
   const titleCtx = useContext(DashboardTitleContext);
@@ -481,6 +482,26 @@ export function Dashboard() {
             <h3 className="text-2xl font-bold">
               {loading ? '...' : formatCurrency(analytics?.data?.transactionVolume)}
             </h3>
+          </div>
+        </Card>
+        
+        {/* Push Notifications Card */}
+        <Card className="p-6 rounded-lg border-gray-200 shadow-none hover:shadow-md transition-shadow">
+          <div className="flex flex-col items-start gap-3 space-x-4">
+            <div className="flex items-center gap-2">
+              <Bell className="w-5 h-5 text-blue-500" />
+              <p className="text-sm text-gray-500 font-semibold">Push Notifications</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <Send className="w-4 h-4 text-gray-400" />
+              <span className="text-sm text-gray-600">Send to users</span>
+            </div>
+            <Link
+              to="/notifications"
+              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
+            >
+              Manage Notifications
+            </Link>
           </div>
         </Card>
       </div>

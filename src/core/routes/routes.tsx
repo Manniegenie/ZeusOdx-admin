@@ -28,6 +28,7 @@ import { WalletGenerateByPhone } from '@/features/users/pages/WalletGenerateByPh
 import { RegenerateWalletByPhone } from '@/features/users/pages/RegenerateWalletByPhone';
 import { Summary } from '@/features/users/pages/Summary';
 import { KYCReview } from '@/features/kyc/pages/KYCReview';
+import { NotificationsManagement } from '@/features/notifications/pages/NotificationsManagement';
 
 export const router = createBrowserRouter([
   {
@@ -137,6 +138,10 @@ export const router = createBrowserRouter([
           {
             path: 'audit',
             element: <AuditAndMonitoring />,
+          },
+          {
+            path: 'notifications',
+            element: <NotificationsManagement />,
           },
           {
             path: 'settings',
