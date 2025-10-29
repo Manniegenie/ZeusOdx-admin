@@ -67,12 +67,9 @@ const navItems: NavItem[] = [
     ]
   },
   {
-    title: 'Features',
-    path: '/features',
+    title: 'Push Notifications',
+    path: '/notifications',
     icon: <Zap className="w-5 h-5" />,
-    sub_menu: [
-      { title: 'Push Notifications', path: '/notifications' },
-    ]
   },
   {
     title: 'Funding & Balances',
