@@ -1,4 +1,4 @@
-import { axiosInstance } from '@/core/services/axios';
+import axiosInstance from '@/core/services/axios';
 import type { 
   NotificationRequest, 
   NotificationResponse, 
