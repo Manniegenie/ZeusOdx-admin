@@ -6,13 +6,13 @@ import type {
   SendNotificationFormData 
 } from '../types/notification.types';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://zeusodx-web.onrender.com';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const notificationService = {
   // Send notification to specific user by ID
   async sendToUser(userId: string, notification: Omit<NotificationRequest, 'userId'>): Promise<NotificationResponse> {
     try {
-      const response = await axiosInstance.post(`${API_BASE_URL}/notification/send-fcm`, {
+      const response = await axiosInstance.post(`${BASE_URL}/notification/send-fcm`, {
         userId,
         title: notification.title,
         body: notification.body,
@@ -28,7 +28,7 @@ export const notificationService = {
   // Send notification to specific device
   async sendToDevice(deviceId: string, notification: Omit<NotificationRequest, 'deviceId'>): Promise<NotificationResponse> {
     try {
-      const response = await axiosInstance.post(`${API_BASE_URL}/notification/send-fcm`, {
+      const response = await axiosInstance.post(`${BASE_URL}/notification/send-fcm`, {
         deviceId,
         title: notification.title,
         body: notification.body,
@@ -44,7 +44,7 @@ export const notificationService = {
   // Send notification to all users
   async sendToAll(notification: Omit<NotificationRequest, 'userId' | 'deviceId'>): Promise<NotificationResponse> {
     try {
-      const response = await axiosInstance.post(`${API_BASE_URL}/notification/send-all`, {
+      const response = await axiosInstance.post(`${BASE_URL}/notification/send-all`, {
         message: notification.body,
         title: notification.title,
         data: notification.data || {}
@@ -59,7 +59,7 @@ export const notificationService = {
   // Get notification statistics
   async getStats(): Promise<NotificationStats> {
     try {
-      const response = await axiosInstance.get(`${API_BASE_URL}/notification/stats`);
+      const response = await axiosInstance.get(`${BASE_URL}/notification/stats`);
       return response.data;
     } catch (error: any) {
       console.error('Error fetching notification stats:', error);
@@ -70,7 +70,7 @@ export const notificationService = {
   // Test Firebase connection
   async testFirebase(): Promise<{ success: boolean; message: string }> {
     try {
-      const response = await axiosInstance.get(`${API_BASE_URL}/notification/test-firebase`);
+      const response = await axiosInstance.get(`${BASE_URL}/notification/test-firebase`);
       return response.data;
     } catch (error: any) {
       console.error('Error testing Firebase:', error);
