@@ -16,7 +16,6 @@ import {
   ChevronRightIcon,
   MoreVertical,
   UserCheck,
-  Bell,
   Zap,
 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
