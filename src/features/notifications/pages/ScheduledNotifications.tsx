@@ -5,24 +5,15 @@ import { DashboardTitleContext } from '@/layouts/DashboardTitleContext';
 import { toast } from 'sonner';
 import { 
   Clock, 
-  Play, 
-  Pause, 
   TestTube, 
   CheckCircle, 
   AlertCircle,
   Calendar,
-  Bell
+  Bell,
+  Info
 } from 'lucide-react';
-import axiosInstance from '@/core/services/axios';
-
-interface ScheduledNotificationStatus {
-  isRunning: boolean;
-  jobsCount: number;
-  schedules: Array<{
-    time: string;
-    running: boolean;
-  }>;
-}
+import { scheduledNotificationService } from '../services/scheduledNotificationService';
+import type { ScheduledNotificationStatus } from '../types/notification.types';
 
 export function ScheduledNotifications() {
   const titleCtx = useContext(DashboardTitleContext);
@@ -39,38 +30,13 @@ export function ScheduledNotifications() {
   }, []);
 
   const loadStatus = async () => {
+    setLoading(true);
     try {
-      const response = await axiosInstance.get('/admin/scheduled-notifications/status');
-      setStatus(response.data.data);
-    } catch (error) {
+      const currentStatus = await scheduledNotificationService.getStatus();
+      setStatus(currentStatus);
+    } catch (error: any) {
       console.error('Failed to load status:', error);
-      toast.error('Failed to load scheduled notification status');
-    }
-  };
-
-  const startNotifications = async () => {
-    setLoading(true);
-    try {
-      await axiosInstance.post('/admin/scheduled-notifications/start');
-      toast.success('Scheduled notifications started successfully');
-      loadStatus();
-    } catch (error) {
-      console.error('Failed to start notifications:', error);
-      toast.error('Failed to start scheduled notifications');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const stopNotifications = async () => {
-    setLoading(true);
-    try {
-      await axiosInstance.post('/admin/scheduled-notifications/stop');
-      toast.success('Scheduled notifications stopped successfully');
-      loadStatus();
-    } catch (error) {
-      console.error('Failed to stop notifications:', error);
-      toast.error('Failed to stop scheduled notifications');
+      toast.error(error.message || 'Failed to load scheduled notification status');
     } finally {
       setLoading(false);
     }
@@ -79,14 +45,26 @@ export function ScheduledNotifications() {
   const testNotification = async () => {
     setTesting(true);
     try {
-      await axiosInstance.post('/admin/scheduled-notifications/test');
+      await scheduledNotificationService.sendTestNotification();
       toast.success('Test notification sent successfully');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to send test notification:', error);
-      toast.error('Failed to send test notification');
+      toast.error(error.message || 'Failed to send test notification');
     } finally {
       setTesting(false);
     }
+  };
+
+  const formatNextRun = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    });
   };
 
   const getTimeIcon = (time: string) => {
@@ -104,7 +82,7 @@ export function ScheduledNotifications() {
           <Clock className="w-8 h-8 text-blue-500" />
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Scheduled Notifications</h1>
-            <p className="text-gray-600">Manage automated price notifications</p>
+            <p className="text-gray-600">Automated price notifications (runs automatically)</p>
           </div>
         </div>
         <div className="flex gap-2">
@@ -123,6 +101,7 @@ export function ScheduledNotifications() {
           </Button>
           <Button
             onClick={loadStatus}
+            disabled={loading}
             variant="outline"
             className="flex items-center gap-2"
           >
@@ -140,7 +119,7 @@ export function ScheduledNotifications() {
             Service Status
           </h2>
           <div className="flex items-center gap-2">
-            {status?.isRunning ? (
+            {status?.status === 'running' ? (
               <div className="flex items-center gap-2 text-green-600">
                 <CheckCircle className="w-5 h-5" />
                 <span className="font-medium">Running</span>
@@ -156,79 +135,51 @@ export function ScheduledNotifications() {
 
         <div className="grid gap-4 md:grid-cols-2">
           <div>
-            <p className="text-sm text-gray-500">Active Jobs</p>
-            <p className="text-2xl font-bold">{status?.jobsCount || 0}</p>
-          </div>
-          <div>
             <p className="text-sm text-gray-500">Status</p>
             <p className="text-lg font-medium">
-              {status?.isRunning ? 'Active' : 'Inactive'}
+              {status?.status === 'running' ? 'Active' : 'Inactive'}
             </p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">Scheduled Times</p>
+            <p className="text-lg font-medium">{status?.scheduledTimes?.length || 0} daily</p>
           </div>
         </div>
 
-        <div className="mt-4 flex gap-2">
-          {status?.isRunning ? (
-            <Button
-              onClick={stopNotifications}
-              disabled={loading}
-              variant="destructive"
-              className="flex items-center gap-2"
-            >
-              {loading ? (
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              ) : (
-                <Pause className="w-4 h-4" />
-              )}
-              Stop Service
-            </Button>
-          ) : (
-            <Button
-              onClick={startNotifications}
-              disabled={loading}
-              className="flex items-center gap-2"
-            >
-              {loading ? (
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              ) : (
-                <Play className="w-4 h-4" />
-              )}
-              Start Service
-            </Button>
-          )}
+        <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+          <div className="flex items-start gap-2">
+            <Info className="w-5 h-5 text-blue-600 mt-0.5" />
+            <div className="text-sm text-blue-800">
+              <p className="font-medium">Automatic Service</p>
+              <p>This service starts automatically when the server boots and runs continuously. No manual intervention required.</p>
+            </div>
+          </div>
         </div>
       </Card>
 
       {/* Schedule Details */}
-      {status?.schedules && status.schedules.length > 0 && (
+      {status?.scheduledTimes && status.scheduledTimes.length > 0 && (
         <Card className="p-6">
           <h2 className="text-xl font-semibold mb-4">Notification Schedule</h2>
           <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-            {status.schedules.map((schedule, index) => (
+            {status.scheduledTimes.map((time, index) => (
               <div
                 key={index}
-                className={`p-4 rounded-lg border-2 ${
-                  schedule.running
-                    ? 'border-green-200 bg-green-50'
-                    : 'border-gray-200 bg-gray-50'
-                }`}
+                className="p-4 rounded-lg border-2 border-green-200 bg-green-50"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl">{getTimeIcon(schedule.time)}</span>
+                  <span className="text-2xl">{getTimeIcon(time)}</span>
                   <div>
-                    <p className="font-semibold text-lg">{schedule.time}</p>
+                    <p className="font-semibold text-lg">{time}</p>
                     <div className="flex items-center gap-1">
-                      {schedule.running ? (
-                        <CheckCircle className="w-4 h-4 text-green-500" />
-                      ) : (
-                        <AlertCircle className="w-4 h-4 text-gray-400" />
-                      )}
-                      <span className={`text-sm ${
-                        schedule.running ? 'text-green-600' : 'text-gray-500'
-                      }`}>
-                        {schedule.running ? 'Active' : 'Inactive'}
-                      </span>
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <span className="text-sm text-green-600">Active</span>
                     </div>
+                    {status.nextRuns && status.nextRuns[index] && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        Next: {formatNextRun(status.nextRuns[index])}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
