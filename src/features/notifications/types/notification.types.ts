@@ -37,3 +37,9 @@ export interface SendNotificationFormData {
   targetType: 'all' | 'user' | 'device';
   targetValue: string;
 }
+
+export interface ScheduledNotificationStatus {
+  status: 'running' | 'stopped';
+  scheduledTimes: string[];
+  nextRuns: string[];
+}
