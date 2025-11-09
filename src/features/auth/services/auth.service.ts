@@ -14,7 +14,35 @@ class AuthService {
       });
       return response.data;
     } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Login failed');
+      // Handle validation errors (400 status)
+      if (error.response?.status === 400 && error.response?.data?.errors) {
+        const validationErrors = error.response.data.errors;
+        const firstError = Array.isArray(validationErrors) ? validationErrors[0] : validationErrors;
+        const errorMessage = firstError?.msg || firstError?.message || error.response?.data?.message || 'Validation failed';
+        
+        console.error('Login validation error:', {
+          status: error.response.status,
+          errors: validationErrors,
+          message: errorMessage
+        });
+        
+        throw new Error(errorMessage);
+      }
+      
+      // Handle different error response formats
+      const errorMessage = 
+        error.response?.data?.message || 
+        error.response?.data?.error || 
+        error.message || 
+        'Login failed';
+      
+      console.error('Login error:', {
+        status: error.response?.status,
+        data: error.response?.data,
+        message: errorMessage
+      });
+      
+      throw new Error(errorMessage);
     }
   }
 
