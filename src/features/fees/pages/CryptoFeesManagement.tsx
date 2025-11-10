@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { DashboardTitleContext } from '@/layouts/DashboardTitleContext';
-import { fetchCryptoFees, updateCryptoFee, updateCryptoNetworkName } from '../store/cryptoFeeSlice';
+import { fetchCryptoFees, updateCryptoFee, updateCryptoNetworkName, deleteCryptoFee } from '../store/cryptoFeeSlice';
 import type { AppDispatch, RootState } from '@/core/store/store';
 import type { CryptoFee } from '../type/fee';
 import { toast } from 'sonner';
@@ -37,6 +37,7 @@ export function CryptoFeesManagement() {
     networkFee: ''
   });
   const [saving, setSaving] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   // Get unique currencies and networks for filters
   const uniqueCurrencies = [...new Set(fees.map(fee => fee.currency))].sort();
@@ -79,6 +80,25 @@ export function CryptoFeesManagement() {
       networkFee: fee.networkFee.toString()
     });
     setIsDialogOpen(true);
+  };
+
+  const handleDelete = async (fee: CryptoFee) => {
+    if (!confirm(`Delete ${fee.currency} - ${fee.network} fee?`)) {
+      return;
+    }
+    try {
+      setDeletingId(`${fee.currency}-${fee.network}`);
+      await dispatch(deleteCryptoFee({
+        currency: fee.currency,
+        network: fee.network,
+      })).unwrap();
+      toast.success('Crypto fee deleted successfully');
+    } catch (err) {
+      console.error('Delete fee failed', err);
+      toast.error('Failed to delete crypto fee');
+    } finally {
+      setDeletingId(null);
+    }
   };
 
   const handleSave = async () => {
@@ -291,6 +311,14 @@ export function CryptoFeesManagement() {
                         onClick={() => handleEdit(fee)}
                       >
                         <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={() => handleDelete(fee)}
+                        disabled={deletingId === `${fee.currency}-${fee.network}`}
+                      >
+                        {deletingId === `${fee.currency}-${fee.network}` ? 'Deleting…' : 'Delete'}
                       </Button>
                     </div>
                   </div>
