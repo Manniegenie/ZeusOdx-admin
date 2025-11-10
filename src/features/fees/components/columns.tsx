@@ -41,6 +41,7 @@ const DeleteButton = ({ fee }: { fee: CryptoFee }) => {
       variant="destructive" 
       onClick={handleDelete}
       disabled={deleting}
+      className="bg-red-600 text-white hover:bg-red-700 disabled:bg-red-400"
     >
       {deleting ? 'Deleting...' : 'Delete'}
     </Button>
