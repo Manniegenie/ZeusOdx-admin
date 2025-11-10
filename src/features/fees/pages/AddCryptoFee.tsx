@@ -98,12 +98,12 @@ export function AddCryptoFee() {
                   value={formData.network}
                   onValueChange={(value) => setFormData(prev => ({ ...prev, network: value }))}
                 >
-                  <SelectTrigger id="network" className="w-full border border-gray-300 py-6">
-                    <SelectValue placeholder="Select network" />
+                  <SelectTrigger id="network" className="w-full border border-gray-300 py-6 text-slate-900">
+                    <SelectValue placeholder="Select network" className="text-slate-900" />
                   </SelectTrigger>
-                  <SelectContent className="w-full border border-gray-300 bg-white">
+                  <SelectContent className="w-full border border-gray-300 bg-white text-slate-900">
                     {DEPOSIT_NETWORK_OPTIONS.map((network) => (
-                      <SelectItem key={network} value={network}>
+                      <SelectItem key={network} value={network} className="text-slate-900">
                         {network}
                       </SelectItem>
                     ))}

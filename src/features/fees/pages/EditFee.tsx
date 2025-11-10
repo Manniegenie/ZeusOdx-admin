@@ -85,12 +85,12 @@ export function EditFee() {
             <div className="w-full space-y-2">
               <Label className="text-sm font-medium text-gray-500" htmlFor="network">Network</Label>
               <Select value={selectedNetwork} onValueChange={setSelectedNetwork}>
-                <SelectTrigger className='w-full border border-gray-300 py-6'>
-                  <SelectValue placeholder="Select Network" />
+                <SelectTrigger className='w-full border border-gray-300 py-6 text-slate-900'>
+                  <SelectValue placeholder="Select Network" className="text-slate-900" />
                 </SelectTrigger>
-                <SelectContent className='w-full bg-white border border-gray-300'>
+                <SelectContent className='w-full bg-white border border-gray-300 text-slate-900'>
                   {networks.map((network) => (
-                    <SelectItem key={network} value={network}>
+                    <SelectItem key={network} value={network} className="text-slate-900">
                       {network}
                     </SelectItem>
                   ))}
