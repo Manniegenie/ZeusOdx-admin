@@ -303,11 +303,11 @@ export function CryptoFeesManagement() {
                         <Edit className="h-4 w-4" />
                       </Button>
                       <Button
-                        variant="destructive"
+                        variant="default"
                         size="sm"
                         onClick={() => handleDelete(fee)}
                         disabled={deletingId === `${fee.currency}-${fee.network}`}
-                        className="gap-2 bg-red-600 text-white hover:bg-red-700 disabled:bg-red-400"
+                        className="gap-2 bg-black text-white hover:bg-gray-900 disabled:bg-gray-700"
                       >
                         <Trash2 className="h-4 w-4" />
                         {deletingId === `${fee.currency}-${fee.network}` ? 'Deleting…' : 'Delete'}
