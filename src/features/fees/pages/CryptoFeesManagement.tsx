@@ -307,7 +307,7 @@ export function CryptoFeesManagement() {
                         size="sm"
                         onClick={() => handleDelete(fee)}
                         disabled={deletingId === `${fee.currency}-${fee.network}`}
-                        className="gap-2 bg-black text-white hover:bg-gray-900 disabled:bg-gray-700"
+                        className="gap-2 bg-black text-black hover:bg-gray-900 hover:text-black disabled:bg-gray-700 disabled:text-gray-400"
                       >
                         <Trash2 className="h-4 w-4" />
                         {deletingId === `${fee.currency}-${fee.network}` ? 'Deleting…' : 'Delete'}
