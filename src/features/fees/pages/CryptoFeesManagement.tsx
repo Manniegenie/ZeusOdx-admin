@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Search, Edit } from 'lucide-react';
+import { Plus, Search, Edit, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -22,12 +22,10 @@ export function CryptoFeesManagement() {
   const { fees, loading, error } = useSelector((state: RootState) => state.cryptoFee);
   const titleCtx = useContext(DashboardTitleContext);
 
-  // State for search and filtering
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCurrency, setFilterCurrency] = useState('');
   const [filterNetwork, setFilterNetwork] = useState('');
 
-  // State for edit dialog (only for editing existing fees)
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingFee, setEditingFee] = useState<CryptoFee | null>(null);
   const [formData, setFormData] = useState({
@@ -39,7 +37,6 @@ export function CryptoFeesManagement() {
   const [saving, setSaving] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
-  // Get unique currencies and networks for filters
   const uniqueCurrencies = [...new Set(fees.map(fee => fee.currency))].sort();
   const uniqueNetworks = [...new Set(fees.map(fee => fee.network))].sort();
 
@@ -50,20 +47,19 @@ export function CryptoFeesManagement() {
       'Crypto Fees',
       'Management',
     ]);
-    
+
     dispatch(fetchCryptoFees());
   }, [dispatch, titleCtx]);
 
-  // Filter fees based on search and filters
   const filteredFees = fees.filter(fee => {
-    const matchesSearch = searchTerm === '' || 
+    const matchesSearch = searchTerm === '' ||
       fee.currency.toLowerCase().includes(searchTerm.toLowerCase()) ||
       fee.network.toLowerCase().includes(searchTerm.toLowerCase()) ||
       fee.networkName.toLowerCase().includes(searchTerm.toLowerCase());
-    
+
     const matchesCurrency = filterCurrency === '' || fee.currency === filterCurrency;
     const matchesNetwork = filterNetwork === '' || fee.network === filterNetwork;
-    
+
     return matchesSearch && matchesCurrency && matchesNetwork;
   });
 
@@ -114,13 +110,12 @@ export function CryptoFeesManagement() {
 
     try {
       setSaving(true);
-      
+
       if (!editingFee) {
         toast.error('No fee selected for editing');
         return;
       }
 
-      // Update existing fee
       await dispatch(updateCryptoFee({
         currency: formData.currency,
         network: formData.network,
@@ -128,7 +123,7 @@ export function CryptoFeesManagement() {
         networkFee: parseFloat(formData.networkFee)
       })).unwrap();
       toast.success('Crypto fee updated successfully');
-      
+
       dispatch(fetchCryptoFees());
       setIsDialogOpen(false);
     } catch (err) {
@@ -156,7 +151,6 @@ export function CryptoFeesManagement() {
 
   return (
     <div className="w-full space-y-6">
-      {/* Header with Add Button */}
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Crypto Fees Management</h1>
@@ -168,7 +162,6 @@ export function CryptoFeesManagement() {
         </Button>
       </div>
 
-      {/* Search and Filters */}
       <Card>
         <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -185,7 +178,7 @@ export function CryptoFeesManagement() {
                 />
               </div>
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="currency-filter">Filter by Currency</Label>
               <Select value={filterCurrency} onValueChange={setFilterCurrency}>
@@ -202,7 +195,7 @@ export function CryptoFeesManagement() {
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="network-filter">Filter by Network</Label>
               <Select value={filterNetwork} onValueChange={setFilterNetwork}>
@@ -219,12 +212,12 @@ export function CryptoFeesManagement() {
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div className="space-y-2">
               <Label>Actions</Label>
               <div className="flex gap-2">
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   onClick={() => {
                     setSearchTerm('');
                     setFilterCurrency('');
@@ -239,7 +232,6 @@ export function CryptoFeesManagement() {
         </CardContent>
       </Card>
 
-      {/* Loading State */}
       {loading && (
         <Card>
           <CardContent className="p-6">
@@ -250,7 +242,6 @@ export function CryptoFeesManagement() {
         </Card>
       )}
 
-      {/* Error State */}
       {error && (
         <Card className="border-red-200 bg-red-50">
           <CardContent className="p-6">
@@ -259,7 +250,6 @@ export function CryptoFeesManagement() {
         </Card>
       )}
 
-      {/* Fees List */}
       {!loading && !error && (
         <div className="grid gap-4">
           {filteredFees.length === 0 ? (
@@ -291,7 +281,7 @@ export function CryptoFeesManagement() {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center gap-2">
                       <Button
                         variant="ghost"
@@ -317,7 +307,9 @@ export function CryptoFeesManagement() {
                         size="sm"
                         onClick={() => handleDelete(fee)}
                         disabled={deletingId === `${fee.currency}-${fee.network}`}
+                        className="gap-2 bg-red-600 text-white hover:bg-red-700 disabled:bg-red-400"
                       >
+                        <Trash2 className="h-4 w-4" />
                         {deletingId === `${fee.currency}-${fee.network}` ? 'Deleting…' : 'Delete'}
                       </Button>
                     </div>
@@ -329,7 +321,6 @@ export function CryptoFeesManagement() {
         </div>
       )}
 
-      {/* Add/Edit Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
@@ -337,7 +328,7 @@ export function CryptoFeesManagement() {
               Edit Crypto Fee
             </DialogTitle>
           </DialogHeader>
-          
+
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="currency">Currency</Label>
@@ -349,7 +340,7 @@ export function CryptoFeesManagement() {
                 disabled={!!editingFee}
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="network">Network</Label>
               <Select
@@ -373,7 +364,7 @@ export function CryptoFeesManagement() {
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="networkName">Network Name</Label>
               <Input
@@ -383,7 +374,7 @@ export function CryptoFeesManagement() {
                 placeholder="e.g., Bitcoin Network, Ethereum Mainnet"
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="networkFee">Network Fee ({formData.currency || 'Token'})</Label>
               <Input
@@ -396,7 +387,7 @@ export function CryptoFeesManagement() {
                 placeholder="0.001"
               />
             </div>
-            
+
             <div className="flex gap-2 pt-4">
               <Button
                 variant="outline"

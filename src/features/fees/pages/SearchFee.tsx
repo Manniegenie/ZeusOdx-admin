@@ -1,5 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
-import { Search } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import type { AppDispatch } from '@/core/store/store';
+import { toast } from 'sonner';
+import { Search, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -12,12 +15,15 @@ import { Card, CardContent } from '@/components/ui/card';
 import type { CryptoFee } from '../type/fee';
 import { DashboardTitleContext } from '@/layouts/DashboardTitleContext';
 import { DEPOSIT_NETWORK_OPTIONS } from '../constants/networks';
+import { deleteCryptoFee } from '../store/cryptoFeeSlice';
 
 export function SearchFee({ initialFee, loading = false, error, viewOnly = false }: { initialFee?: CryptoFee; loading?: boolean; error?: string | null; viewOnly?: boolean } = {}) {
   const titleCtx = useContext(DashboardTitleContext);
+  const dispatch = useDispatch<AppDispatch>();
   const [selectedCurrency, setSelectedCurrency] = useState<string>(initialFee?.currency ?? '');
   const [selectedNetwork, setSelectedNetwork] = useState<string>(initialFee?.network ?? '');
   const [searchResult, setSearchResult] = useState<CryptoFee | null>(initialFee ?? null);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     titleCtx?.setTitle('View Specific Fee');
@@ -28,7 +34,6 @@ export function SearchFee({ initialFee, loading = false, error, viewOnly = false
     ]);
   }, [titleCtx]);
 
-  // auto-search/prefill when initialFee is provided
   useEffect(() => {
     if (initialFee) {
       setSelectedCurrency(initialFee.currency ?? '');
@@ -37,13 +42,10 @@ export function SearchFee({ initialFee, loading = false, error, viewOnly = false
     }
   }, [initialFee]);
 
-  // TODO: Replace with actual data from your API
   const currencies = ['BTC', 'ETH', 'USDT'];
   const networks = DEPOSIT_NETWORK_OPTIONS;
 
   const handleSearch = () => {
-    // TODO: Implement actual search functionality
-    // This is mock data for demonstration
     if (selectedCurrency && selectedNetwork) {
       const mockResult: CryptoFee = {
         currency: selectedCurrency,
@@ -55,19 +57,38 @@ export function SearchFee({ initialFee, loading = false, error, viewOnly = false
     }
   };
 
+  const handleDelete = async () => {
+    if (!searchResult) return;
+    if (!confirm(`Delete ${searchResult.currency} - ${searchResult.network} fee?`)) {
+      return;
+    }
+
+    try {
+      setDeleting(true);
+      await dispatch(deleteCryptoFee({ currency: searchResult.currency, network: searchResult.network })).unwrap();
+      toast.success('Crypto fee deleted successfully');
+      setSearchResult(null);
+    } catch (error) {
+      console.error('Failed to delete crypto fee', error);
+      toast.error('Failed to delete crypto fee');
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   return (
     <div className="w-full max-w-2xl mx-auto mt-8 space-y-6">
-      <Card className='border border-gray-200 shadow-none'>
+      <Card className="border border-gray-200 shadow-none">
         <CardContent className="py-6 px-4">
           <div className="w-full py-8 flex flex-col justify-center items-start gap-8">
             {viewOnly ? (
               <div className="w-full py-6 border border-gray-200 rounded px-3">{selectedCurrency || '-'}</div>
             ) : (
               <Select value={selectedCurrency} onValueChange={setSelectedCurrency}>
-                <SelectTrigger className='w-full border border-gray-300 py-6'>
+                <SelectTrigger className="w-full border border-gray-300 py-6">
                   <SelectValue placeholder="Select Currency" />
                 </SelectTrigger>
-                <SelectContent className='w-full border border-gray-300 bg-white'>
+                <SelectContent className="w-full border border-gray-300 bg-white">
                   {currencies.map((currency) => (
                     <SelectItem key={currency} value={currency}>
                       {currency}
@@ -81,10 +102,10 @@ export function SearchFee({ initialFee, loading = false, error, viewOnly = false
               <div className="w-full py-6 border border-gray-200 rounded px-3">{selectedNetwork || '-'}</div>
             ) : (
               <Select value={selectedNetwork} onValueChange={setSelectedNetwork}>
-                <SelectTrigger className='w-full border border-gray-300 py-6 text-slate-900'>
+                <SelectTrigger className="w-full border border-gray-300 py-6 text-slate-900">
                   <SelectValue placeholder="Select Network" className="text-slate-900" />
                 </SelectTrigger>
-                <SelectContent className='w-full bg-white border border-gray-300 text-slate-900'>
+                <SelectContent className="w-full bg-white border border-gray-300 text-slate-900">
                   {networks.map((network) => (
                     <SelectItem key={network} value={network} className="text-slate-900">
                       {network}
@@ -117,8 +138,22 @@ export function SearchFee({ initialFee, loading = false, error, viewOnly = false
 
       {searchResult && (
         <Card className="bg-green-100 border-green-300 shadow-none">
-          <CardContent className="pt-6">
-            <h3 className="font-semibold mb-4">Fee Details</h3>
+          <CardContent className="pt-6 space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="font-semibold">Fee Details</h3>
+              {!viewOnly && (
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={handleDelete}
+                  disabled={deleting}
+                  className="gap-2 bg-red-600 text-white hover:bg-red-700 disabled:bg-red-400"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  {deleting ? 'Deleting…' : 'Delete'}
+                </Button>
+              )}
+            </div>
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span className="font-medium">Currency:</span>
@@ -133,7 +168,7 @@ export function SearchFee({ initialFee, loading = false, error, viewOnly = false
                 <span>{searchResult.networkName}</span>
               </div>
               <div className="flex justify-between">
-                <span className="font-medium">Fee (USD):</span>
+                <span className="font-medium">Fee (Token):</span>
                 <span>{searchResult.networkFee}</span>
               </div>
             </div>
