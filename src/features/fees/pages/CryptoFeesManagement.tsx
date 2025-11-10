@@ -14,6 +14,7 @@ import { fetchCryptoFees, updateCryptoFee, updateCryptoNetworkName } from '../st
 import type { AppDispatch, RootState } from '@/core/store/store';
 import type { CryptoFee } from '../type/fee';
 import { toast } from 'sonner';
+import { DEPOSIT_NETWORK_OPTIONS } from '../constants/networks';
 
 export function CryptoFeesManagement() {
   const dispatch = useDispatch<AppDispatch>();
@@ -323,13 +324,26 @@ export function CryptoFeesManagement() {
             
             <div className="space-y-2">
               <Label htmlFor="network">Network</Label>
-              <Input
-                id="network"
+              <Select
                 value={formData.network}
-                onChange={(e) => setFormData(prev => ({ ...prev, network: e.target.value.toUpperCase() }))}
-                placeholder="e.g., BITCOIN, ETHEREUM, TRON"
+                onValueChange={(value) => setFormData(prev => ({ ...prev, network: value }))}
                 disabled={!!editingFee}
-              />
+              >
+                <SelectTrigger
+                  id="network"
+                  className="w-full border border-gray-300 py-6"
+                  disabled={!!editingFee}
+                >
+                  <SelectValue placeholder="Select network" />
+                </SelectTrigger>
+                <SelectContent className="w-full border border-gray-300 bg-white">
+                  {DEPOSIT_NETWORK_OPTIONS.map((network) => (
+                    <SelectItem key={network} value={network}>
+                      {network}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             
             <div className="space-y-2">

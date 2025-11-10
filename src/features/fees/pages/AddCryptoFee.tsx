@@ -5,10 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { DashboardTitleContext } from '@/layouts/DashboardTitleContext';
 import { createCryptoFee } from '../store/cryptoFeeSlice';
 import type { AppDispatch } from '@/core/store/store';
 import { toast } from 'sonner';
+import { DEPOSIT_NETWORK_OPTIONS } from '../constants/networks';
 
 export function AddCryptoFee() {
   const navigate = useNavigate();
@@ -51,9 +53,15 @@ export function AddCryptoFee() {
       
       toast.success('Crypto fee created successfully');
       navigate('/fees-rates/crypto-fees-management');
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Create failed', err);
-      const errorMessage = err?.response?.data?.message || 'Failed to create crypto fee';
+      const errorMessage =
+        typeof err === 'object' &&
+        err !== null &&
+        'response' in err &&
+        typeof (err as { response?: { data?: { message?: string } } }).response?.data?.message === 'string'
+          ? (err as { response?: { data?: { message?: string } } }).response?.data?.message ?? 'Failed to create crypto fee'
+          : 'Failed to create crypto fee';
       toast.error(errorMessage);
     } finally {
       setSaving(false);
@@ -86,13 +94,21 @@ export function AddCryptoFee() {
               
               <div className="space-y-2">
                 <Label htmlFor="network">Network *</Label>
-                <Input
-                  id="network"
+                <Select
                   value={formData.network}
-                  onChange={(e) => setFormData(prev => ({ ...prev, network: e.target.value.toUpperCase() }))}
-                  placeholder="e.g., BITCOIN, ETHEREUM, TRON"
-                  required
-                />
+                  onValueChange={(value) => setFormData(prev => ({ ...prev, network: value }))}
+                >
+                  <SelectTrigger id="network" className="w-full border border-gray-300 py-6">
+                    <SelectValue placeholder="Select network" />
+                  </SelectTrigger>
+                  <SelectContent className="w-full border border-gray-300 bg-white">
+                    {DEPOSIT_NETWORK_OPTIONS.map((network) => (
+                      <SelectItem key={network} value={network}>
+                        {network}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
             

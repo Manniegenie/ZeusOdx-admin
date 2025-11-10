@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '@/core/store/store';
 import { updateCryptoFee, fetchCryptoFees } from '../store/cryptoFeeSlice';
 import { toast } from 'sonner';
+import { DEPOSIT_NETWORK_OPTIONS } from "../constants/networks";
 
 export function EditFee() {
   const titleCtx = useContext(DashboardTitleContext);
@@ -36,7 +37,7 @@ export function EditFee() {
   }, [titleCtx]);
 
   const currencies = ['BTC', 'ETH', 'USDT'];
-  const networks = ['Bitcoin', 'Ethereum', 'Tron'];
+  const networks = DEPOSIT_NETWORK_OPTIONS;
 
   const handleSave = async () => {
     const currency = selectedCurrency.trim();

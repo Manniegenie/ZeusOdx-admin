@@ -11,6 +11,7 @@ import {
 import { Card, CardContent } from '@/components/ui/card';
 import type { CryptoFee } from '../type/fee';
 import { DashboardTitleContext } from '@/layouts/DashboardTitleContext';
+import { DEPOSIT_NETWORK_OPTIONS } from '../constants/networks';
 
 export function SearchFee({ initialFee, loading = false, error, viewOnly = false }: { initialFee?: CryptoFee; loading?: boolean; error?: string | null; viewOnly?: boolean } = {}) {
   const titleCtx = useContext(DashboardTitleContext);
@@ -38,7 +39,7 @@ export function SearchFee({ initialFee, loading = false, error, viewOnly = false
 
   // TODO: Replace with actual data from your API
   const currencies = ['BTC', 'ETH', 'USDT'];
-  const networks = ['Bitcoin', 'Ethereum', 'Tron'];
+  const networks = DEPOSIT_NETWORK_OPTIONS;
 
   const handleSearch = () => {
     // TODO: Implement actual search functionality
