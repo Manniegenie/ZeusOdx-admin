@@ -2,6 +2,7 @@ import axios from '@/core/services/axios';
 import type { GlobalMarkdownResponse, CalculatePriceResponse } from '../type/assetMarkdown';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
+const MARKDOWN_BASE_PATH = '/marker';
 
 function normalizeGlobalResponse(raw: unknown): GlobalMarkdownResponse {
   let success = false;
@@ -27,13 +28,20 @@ function normalizeGlobalResponse(raw: unknown): GlobalMarkdownResponse {
 
 export const assetMarkdownService = {
   getGlobal: async (): Promise<GlobalMarkdownResponse> => {
-    const res = await axios.get(`${BASE_URL}/asset-markdown/global`);
-    return normalizeGlobalResponse(res.data);
+    try {
+      const res = await axios.get(`${BASE_URL}${MARKDOWN_BASE_PATH}/global`);
+      return normalizeGlobalResponse(res.data);
+    } catch (error: any) {
+      if (error?.response?.status === 404) {
+        return { success: false, message: 'Global markdown not configured', data: null };
+      }
+      throw error;
+    }
   },
 
   setGlobal: async (payload: { markdownPercentage: number; description?: string; updatedBy?: string; }) => {
     const token = localStorage.getItem('token');
-    const res = await axios.post(`${BASE_URL}/asset-markdown/set-global`, payload, {
+    const res = await axios.post(`${BASE_URL}${MARKDOWN_BASE_PATH}/set-global`, payload, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: token ? `Bearer ${token}` : undefined,
@@ -44,7 +52,7 @@ export const assetMarkdownService = {
 
   toggleGlobal: async (payload: { updatedBy?: string }) => {
     const token = localStorage.getItem('token');
-    const res = await axios.put(`${BASE_URL}/asset-markdown/toggle-global`, payload, {
+    const res = await axios.put(`${BASE_URL}${MARKDOWN_BASE_PATH}/toggle-global`, payload, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: token ? `Bearer ${token}` : undefined,
@@ -54,7 +62,7 @@ export const assetMarkdownService = {
   },
 
   calculatePrice: async (originalPrice: number, asset: string): Promise<CalculatePriceResponse> => {
-    const res = await axios.get(`${BASE_URL}/asset-markdown/calculate-price?originalPrice=${encodeURIComponent(originalPrice)}&asset=${encodeURIComponent(asset)}`);
+    const res = await axios.get(`${BASE_URL}${MARKDOWN_BASE_PATH}/calculate-price?originalPrice=${encodeURIComponent(originalPrice)}&asset=${encodeURIComponent(asset)}`);
     // minimal normalization: return as-is but ensure fields exist
     const raw = res.data;
     const success = raw?.success ?? false;
