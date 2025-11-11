@@ -62,8 +62,12 @@ const navItems: NavItem[] = [
     icon: <Calculator className="w-5 h-5" />,
     sub_menu: [
       { title: 'View all fees', path: '/fees-rates' },
+      { title: 'Crypto fee management', path: '/fees-rates/crypto-fees-management' },
+      { title: 'On-ramp management', path: '/fees-rates/onramp-management' },
+      { title: 'Off-ramp management', path: '/fees-rates/offramp-management' },
+      { title: 'Price markdown', path: '/fees-rates/price-markdown' },
+      { title: 'Price calculator', path: '/fees-rates/price-calculator' },
       { title: 'Gift card rates', path: '/fees-rates/gift-card-rates' },
-      { title: 'Price Calculator', path: '/fees-rates/price-calculator' },
     ]
   },
   {

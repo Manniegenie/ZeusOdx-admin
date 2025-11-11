@@ -30,6 +30,9 @@ import { Summary } from '@/features/users/pages/Summary';
 import { KYCReview } from '@/features/kyc/pages/KYCReview';
 import { NotificationsManagement } from '@/features/notifications/pages/NotificationsManagement';
 import { ScheduledNotifications } from '@/features/notifications/pages/ScheduledNotifications';
+import { PriceMarkdown } from '@/features/fees/pages/PriceMarkdown';
+import { OnrampManagement } from '@/features/fees/pages/OnrampManagement';
+import { OfframpManagement } from '@/features/fees/pages/OfframpManagement';
 
 export const router = createBrowserRouter([
   {
@@ -104,7 +107,19 @@ export const router = createBrowserRouter([
             path: 'fees-rates/gift-card-rates',
             element: <GiftCardRates />,
           },
-          { 
+          {
+            path: 'fees-rates/onramp-management',
+            element: <OnrampManagement />,
+          },
+          {
+            path: 'fees-rates/offramp-management',
+            element: <OfframpManagement />,
+          },
+          {
+            path: 'fees-rates/price-markdown',
+            element: <PriceMarkdown />,
+          },
+          {
             path: 'fees-rates/price-calculator',
             element: <PriceCalculator />,
           },

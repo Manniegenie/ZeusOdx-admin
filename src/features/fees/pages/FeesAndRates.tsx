@@ -127,6 +127,11 @@ export function FeesAndRates() {
                     <span>Advanced Management</span>
                   </Button>
                 </Link>
+                <Link to="/fees-rates/price-markdown">
+                  <Button variant="outline" className="flex items-center gap-2">
+                    <span>Adjust Price Markdown</span>
+                  </Button>
+                </Link>
                 <Link to="/fees-rates/add-crypto-fee">
                   <Button className="flex items-center gap-2">
                     <span>Add New Fee</span>
@@ -153,6 +158,11 @@ export function FeesAndRates() {
         </TabsContent>
 
         <TabsContent value="onramp-rate" className="mt-6">
+          <div className="flex justify-end mb-4">
+            <Link to="/fees-rates/onramp-management">
+              <Button variant="outline">Open on-ramp management</Button>
+            </Link>
+          </div>
           <Card className="w-full max-w-2xl mx-auto">
             <CardContent className="p-6">
               <div className="bg-primary relative rounded-lg p-6 w-full text-white flex flex-col justify-center gap-6 mb-6">
@@ -185,6 +195,11 @@ export function FeesAndRates() {
         </TabsContent>
 
         <TabsContent value="offramp-rate" className="mt-6">
+          <div className="flex justify-end mb-4">
+            <Link to="/fees-rates/offramp-management">
+              <Button variant="outline">Open off-ramp management</Button>
+            </Link>
+          </div>
           <Card className="w-full max-w-2xl mx-auto">
             <CardContent className="p-6">
               <div className="bg-primary relative rounded-lg p-6 w-full text-white flex flex-col justify-center gap-6 mb-6">
