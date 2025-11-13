@@ -10,6 +10,15 @@ export interface NotificationRequest {
 export interface NotificationResponse {
   success: boolean;
   message: string;
+  total?: number;
+  successful?: number;
+  failed?: number;
+  via?: 'fcm' | 'expo' | 'fcm/expo';
+  results?: Array<{
+    userId: string;
+    success: boolean;
+    error?: string | null;
+  }>;
   result?: {
     success: boolean;
     tickets?: Array<{

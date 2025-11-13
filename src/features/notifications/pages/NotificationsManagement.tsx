@@ -92,7 +92,16 @@ export function NotificationsManagement() {
       const result = await notificationService.sendNotification(formData);
       
       if (result.success) {
-        toast.success('Notification sent successfully!');
+        // Show detailed success message for bulk sends
+        if (result.total !== undefined) {
+          toast.success(
+            `Notification sent successfully! ${result.successful || 0} out of ${result.total} users received it.${result.failed ? ` ${result.failed} failed.` : ''}`,
+            { duration: 5000 }
+          );
+        } else {
+          toast.success(result.message || 'Notification sent successfully!');
+        }
+        
         // Reset form
         setFormData({
           title: '',
@@ -108,7 +117,8 @@ export function NotificationsManagement() {
       }
     } catch (error: any) {
       console.error('Error sending notification:', error);
-      toast.error(error.message || 'Failed to send notification');
+      const errorMessage = error.message || 'Failed to send notification';
+      toast.error(errorMessage, { duration: 5000 });
     } finally {
       setLoading(false);
     }
