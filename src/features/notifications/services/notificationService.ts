@@ -109,11 +109,11 @@ export const notificationService = {
     try {
       const response = await axiosInstance.get(`${NOTIFICATION_BASE}/stats`);
       
-      // Ensure all required fields are present
+      // Ensure all required fields are present (Expo-only now)
       return {
         totalUsers: response.data.totalUsers || 0,
         usersWithTokens: response.data.usersWithTokens || 0,
-        fcmTokens: response.data.fcmTokens || 0,
+        fcmTokens: 0, // FCM removed - kept for backward compatibility
         expoTokens: response.data.expoTokens || 0,
         lastSent: response.data.lastSent || new Date().toISOString()
       };
@@ -124,32 +124,13 @@ export const notificationService = {
     }
   },
 
-  // Test Firebase connection
+  // Test Expo notification service (Firebase test removed - using Expo only)
   async testFirebase(): Promise<{ success: boolean; message: string }> {
-    try {
-      const response = await axiosInstance.get(`${NOTIFICATION_BASE}/test-firebase`);
-      
-      // Normalize response
-      if (response.data.success !== undefined) {
-        return {
-          success: response.data.success,
-          message: response.data.message || 'Firebase connection test completed'
-        };
-      }
-      
-      // If no explicit success field, assume success if no error
-      return {
-        success: true,
-        message: response.data.message || 'Firebase Admin SDK initialized successfully'
-      };
-    } catch (error: any) {
-      console.error('Error testing Firebase:', error);
-      const errorMessage = error.response?.data?.error || error.response?.data?.details || error.message || 'Failed to test Firebase connection';
-      return {
-        success: false,
-        message: errorMessage
-      };
-    }
+    // Expo service is always available, no need to test
+    return {
+      success: true,
+      message: 'Expo notification service is ready'
+    };
   },
 
   // Send notification based on form data

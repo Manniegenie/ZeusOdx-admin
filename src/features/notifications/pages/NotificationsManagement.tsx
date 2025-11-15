@@ -143,7 +143,7 @@ export function NotificationsManagement() {
           <Bell className="w-8 h-8 text-blue-500" />
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Push Notifications</h1>
-            <p className="text-gray-600">Send notifications to users via Firebase and Expo</p>
+            <p className="text-gray-600">Send notifications to users via Expo</p>
           </div>
         </div>
         <Button
@@ -152,7 +152,7 @@ export function NotificationsManagement() {
           className="flex items-center gap-2"
         >
           <Activity className="w-4 h-4" />
-          Test Firebase
+          Test Service
         </Button>
       </div>
 
@@ -182,8 +182,8 @@ export function NotificationsManagement() {
           <div className="flex items-center gap-3">
             <Zap className="w-8 h-8 text-purple-500" />
             <div>
-              <p className="text-sm text-gray-500">FCM Tokens</p>
-              <p className="text-2xl font-bold">{stats?.fcmTokens || '—'}</p>
+              <p className="text-sm text-gray-500">Active Tokens</p>
+              <p className="text-2xl font-bold">{stats?.expoTokens || '—'}</p>
             </div>
           </div>
         </Card>
@@ -199,7 +199,7 @@ export function NotificationsManagement() {
         </Card>
       </div>
 
-      {/* Firebase Status */}
+      {/* Notification Service Status */}
       {firebaseStatus && (
         <Card className={`p-4 ${firebaseStatus.success ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
           <div className="flex items-center gap-3">
@@ -210,7 +210,7 @@ export function NotificationsManagement() {
             )}
             <div>
               <p className={`font-medium ${firebaseStatus.success ? 'text-green-800' : 'text-red-800'}`}>
-                Firebase Status: {firebaseStatus.success ? 'Connected' : 'Disconnected'}
+                Expo Service Status: {firebaseStatus.success ? 'Ready' : 'Unavailable'}
               </p>
               <p className={`text-sm ${firebaseStatus.success ? 'text-green-600' : 'text-red-600'}`}>
                 {firebaseStatus.message}
