@@ -2,24 +2,22 @@ import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { RefreshCcw } from "lucide-react";
 import { DashboardTitleContext } from "@/layouts/DashboardTitleContext";
-// removed unused imports
 import type { FetchWalletsResponse } from "@/features/users/types/userApi.types";
 import { WalletList } from "@/features/funding/components/WalletList";
+import { getCompleteUserSummary } from "@/features/users/services/usersService";
+import { toast } from "sonner";
 
 export function Summary() {
   const titleCtx = useContext(DashboardTitleContext);
   const location = useLocation();
   const navState = (location.state ?? {}) as { user?: { email?: string } };
-  // removed unused selects — using tokens input instead
 
   const [userEmail] = useState<string>(
     () => navState.user?.email ?? ""
   );
-  const [walletData] = useState<FetchWalletsResponse | null>(
-    null
-  );
-
-  // exportCsv intentionally removed — not used in this simplified view
+  const [walletData, setWalletData] = useState<FetchWalletsResponse | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState<string>("—");
 
   useEffect(() => {
     titleCtx?.setTitle("Summary");
@@ -29,9 +27,48 @@ export function Summary() {
     ]);
   }, [titleCtx]);
 
-  // TODO: Replace with actual data from your API
+  // Fetch user summary data
+  useEffect(() => {
+    const fetchSummary = async () => {
+      if (!userEmail) {
+        return;
+      }
 
-  // handleSearch removed — not used in simplified view
+      setLoading(true);
+      try {
+        const response = await getCompleteUserSummary(userEmail);
+        if (response.success && response.data) {
+          // Transform the data to match FetchWalletsResponse format for WalletList
+          const transformedData: FetchWalletsResponse = {
+            email: response.data.user.email,
+            wallets: response.data.wallets,
+            balances: response.data.balances
+          };
+          setWalletData(transformedData);
+          
+          // Format last updated date
+          if (response.data.lastUpdated) {
+            const date = new Date(response.data.lastUpdated);
+            setLastUpdated(date.toLocaleString('en-US', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit'
+            }));
+          }
+        }
+      } catch (error: any) {
+        console.error('Error fetching user summary:', error);
+        toast.error(error?.response?.data?.error || 'Failed to fetch user summary');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSummary();
+  }, [userEmail]);
 
   return (
     <div className="w-full px-10">
@@ -126,31 +163,38 @@ export function Summary() {
             </div>
             <div className="h-full">
               <span className="flex items-center justify-start gap-2">
-                <span className="text-[50px] font-semibold">{
-                  (() => {
-                    if (!walletData?.balances) return '—';
-                    // Prefer USD-denominated balances if present (e.g., btcBalanceUSD)
-                    const usdEntries = Object.entries(walletData.balances).filter(([k, v]) => /balanceusd$/i.test(k) && Number(v));
-                    if (usdEntries.length > 0) {
-                      const usdSum = usdEntries.reduce((acc, pair) => acc + (Number(pair[1]) || 0), 0);
-                      return usdSum.toLocaleString(undefined, { maximumFractionDigits: 2 });
-                    }
-                    // Fallback: sum raw numeric balances (not pending)
-                    const vals = Object.entries(walletData.balances)
-                      .filter(([k]) => /balance$/i.test(k) && !/pending/i.test(k))
-                      .map(([, val]) => Number(val) || 0);
-                    const sum = vals.reduce((a, b) => a + b, 0);
-                    return sum.toLocaleString(undefined, { maximumFractionDigits: 8 });
-                  })()
-                }</span>
-                <RefreshCcw className="h-4 w-4 text-white" />
+                <span className="text-[50px] font-semibold">
+                  {loading ? (
+                    'Loading...'
+                  ) : (
+                    (() => {
+                      if (!walletData?.balances) return '—';
+                      // Use totalPortfolioBalance if available, otherwise calculate
+                      if (walletData.balances.totalPortfolioBalance !== undefined) {
+                        return walletData.balances.totalPortfolioBalance.toLocaleString(undefined, { 
+                          maximumFractionDigits: 2,
+                          minimumFractionDigits: 2
+                        });
+                      }
+                      // Fallback: sum raw numeric balances (not pending)
+                      const vals = Object.entries(walletData.balances)
+                        .filter(([k]) => /balance$/i.test(k) && !/pending/i.test(k))
+                        .map(([, val]) => Number(val) || 0);
+                      const sum = vals.reduce((a, b) => a + b, 0);
+                      return sum.toLocaleString(undefined, { maximumFractionDigits: 2 });
+                    })()
+                  )}
+                </span>
+                <RefreshCcw 
+                  className={`h-4 w-4 text-white ${loading ? 'animate-spin' : ''}`}
+                />
               </span>
-              <span>Total Portfolio Value (USD)</span>
+              <span>Total Portfolio Value</span>
             </div>
           </div>
           <div className="flex flex-col items-end justify-start h-full text-xs">
             <span>Last Updated</span>
-            <span>2025-09-01 16:45:23</span>
+            <span>{lastUpdated}</span>
           </div>
         </div>
           {/* compute filtered data for display */}

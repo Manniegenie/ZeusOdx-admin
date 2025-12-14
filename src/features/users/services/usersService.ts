@@ -1,5 +1,5 @@
 import axios from '@/core/services/axios';
-import type { UsersSummaryResponse, RemovePasswordResponse, FetchWalletsResponse, WipePendingResponse } from '@/features/users/types/userApi.types';
+import type { UsersSummaryResponse, RemovePasswordResponse, FetchWalletsResponse, WipePendingResponse, CompleteUserSummaryResponse } from '@/features/users/types/userApi.types';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -105,4 +105,15 @@ export async function statusByPhone(phonenumber: string) {
   return res.data;
 }
 
-export default { getUsersSummary, removePasswordPin, fetchUserWallets, wipePendingBalance };
+export async function getCompleteUserSummary(email: string): Promise<CompleteUserSummaryResponse> {
+  const token = localStorage.getItem('token');
+  const res = await axios.get(`${BASE_URL}/usermanagement/summary`, {
+    params: { email },
+    headers: {
+      Authorization: token ? `Bearer ${token}` : undefined,
+    },
+  });
+  return res.data as CompleteUserSummaryResponse;
+}
+
+export default { getUsersSummary, removePasswordPin, fetchUserWallets, wipePendingBalance, getCompleteUserSummary };
