@@ -133,6 +133,30 @@ export const notificationService = {
     };
   },
 
+  // Clear all push tokens
+  async clearAllTokens(): Promise<{ success: boolean; message: string; modifiedCount?: number }> {
+    try {
+      const response = await axiosInstance.post(`${NOTIFICATION_BASE}/clear-all`);
+      return response.data;
+    } catch (error: any) {
+      console.error('Error clearing all tokens:', error);
+      const errorMessage = error.response?.data?.error || error.message || 'Failed to clear tokens';
+      throw new Error(errorMessage);
+    }
+  },
+
+  // Clear push tokens by phone number
+  async clearTokensByPhone(phonenumber: string): Promise<{ success: boolean; message: string }> {
+    try {
+      const response = await axiosInstance.post(`${NOTIFICATION_BASE}/clear-by-phone`, { phonenumber });
+      return response.data;
+    } catch (error: any) {
+      console.error('Error clearing tokens by phone:', error);
+      const errorMessage = error.response?.data?.error || error.message || 'Failed to clear tokens by phone';
+      throw new Error(errorMessage);
+    }
+  },
+
   // Send notification based on form data
   async sendNotification(formData: SendNotificationFormData): Promise<NotificationResponse> {
     const notification = {

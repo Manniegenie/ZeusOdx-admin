@@ -25,6 +25,9 @@ export function NotificationsManagement() {
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState<NotificationStats | null>(null);
   const [firebaseStatus, setFirebaseStatus] = useState<{ success: boolean; message: string } | null>(null);
+  const [clearAllLoading, setClearAllLoading] = useState(false);
+  const [clearPhoneLoading, setClearPhoneLoading] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [formData, setFormData] = useState<SendNotificationFormData>({
     title: '',
     body: '',
@@ -121,6 +124,37 @@ export function NotificationsManagement() {
       toast.error(errorMessage, { duration: 5000 });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleClearAllTokens = async () => {
+    setClearAllLoading(true);
+    try {
+      const result = await notificationService.clearAllTokens();
+      toast.success(result.message || 'All tokens cleared');
+      loadStats();
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to clear tokens');
+    } finally {
+      setClearAllLoading(false);
+    }
+  };
+
+  const handleClearTokensByPhone = async () => {
+    if (!phoneNumber.trim()) {
+      toast.error('Phone number is required');
+      return;
+    }
+    setClearPhoneLoading(true);
+    try {
+      const result = await notificationService.clearTokensByPhone(phoneNumber.trim());
+      toast.success(result.message || 'Tokens cleared for phone number');
+      setPhoneNumber('');
+      loadStats();
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to clear tokens by phone');
+    } finally {
+      setClearPhoneLoading(false);
     }
   };
 
@@ -384,6 +418,48 @@ export function NotificationsManagement() {
             <AlertCircle className="w-4 h-4 mr-2" />
             Security Alert
           </Button>
+        </div>
+      </Card>
+
+      {/* Token Maintenance */}
+      <Card className="p-6">
+        <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+          <Smartphone className="w-5 h-5" />
+          Token Maintenance
+        </h2>
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="space-y-3">
+            <Label>Clear all tokens</Label>
+            <p className="text-sm text-gray-600">
+              Removes all stored Expo push tokens for every user. Devices will need to re-register on next app open.
+            </p>
+            <Button
+              variant="destructive"
+              onClick={handleClearAllTokens}
+              disabled={clearAllLoading}
+              className="w-fit"
+            >
+              {clearAllLoading ? 'Clearing...' : 'Clear all tokens'}
+            </Button>
+          </div>
+
+          <div className="space-y-3">
+            <Label htmlFor="phone-clear">Clear by phone number</Label>
+            <Input
+              id="phone-clear"
+              placeholder="Enter phone number"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+            />
+            <Button
+              variant="outline"
+              onClick={handleClearTokensByPhone}
+              disabled={clearPhoneLoading}
+              className="w-fit"
+            >
+              {clearPhoneLoading ? 'Clearing...' : 'Clear tokens for phone'}
+            </Button>
+          </div>
         </div>
       </Card>
     </div>
