@@ -438,7 +438,7 @@ export function NotificationsManagement() {
               type="button"
               onClick={handleClearAllTokens}
               disabled={clearAllLoading}
-              className="w-fit"
+              className="w-full justify-center"
             >
               {clearAllLoading ? 'Clearing...' : 'Clear all tokens'}
             </Button>
@@ -457,7 +457,7 @@ export function NotificationsManagement() {
               type="button"
               onClick={handleClearTokensByPhone}
               disabled={clearPhoneLoading}
-              className="w-fit"
+              className="w-full justify-center"
             >
               {clearPhoneLoading ? 'Clearing...' : 'Clear tokens for phone'}
             </Button>
