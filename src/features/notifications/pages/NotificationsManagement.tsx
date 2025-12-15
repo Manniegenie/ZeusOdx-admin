@@ -435,6 +435,7 @@ export function NotificationsManagement() {
             </p>
             <Button
               variant="destructive"
+              type="button"
               onClick={handleClearAllTokens}
               disabled={clearAllLoading}
               className="w-fit"
@@ -447,12 +448,13 @@ export function NotificationsManagement() {
             <Label htmlFor="phone-clear">Clear by phone number</Label>
             <Input
               id="phone-clear"
-              placeholder="Enter phone number"
+              placeholder="Enter phone number (e.g., +2348012345678)"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
             <Button
               variant="outline"
+              type="button"
               onClick={handleClearTokensByPhone}
               disabled={clearPhoneLoading}
               className="w-fit"
