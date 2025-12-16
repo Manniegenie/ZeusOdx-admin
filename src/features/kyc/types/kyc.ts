@@ -20,6 +20,8 @@ export interface KYCEntry {
   imageLinks?: {
     selfie_image?: string;
     liveness_images?: string[];
+    document_image?: string;
+    cropped_image?: string;
   };
   user: {
     _id: string;

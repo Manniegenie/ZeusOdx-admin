@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, RefreshCw, Eye } from 'lucide-react';
@@ -23,6 +24,7 @@ export function KYCDataTable({
   onPageChange,
   onRefresh
 }: KYCDataTableProps) {
+  const navigate = useNavigate();
   const { currentPage, totalPages, total, hasNextPage, hasPrevPage, limit } = pagination;
 
   // Helper function to format date
@@ -160,10 +162,7 @@ export function KYCDataTable({
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => {
-                        // TODO: Implement view details modal
-                        console.log('View details for:', entry._id);
-                      }}
+                      onClick={() => navigate(`/kyc/${entry._id}`)}
                       className="flex items-center gap-1"
                     >
                       <Eye className="w-4 h-4" />

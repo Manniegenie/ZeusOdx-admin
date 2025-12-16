@@ -28,6 +28,7 @@ import { WalletGenerateByPhone } from '@/features/users/pages/WalletGenerateByPh
 import { RegenerateWalletByPhone } from '@/features/users/pages/RegenerateWalletByPhone';
 import { Summary } from '@/features/users/pages/Summary';
 import { KYCReview } from '@/features/kyc/pages/KYCReview';
+import { KYCDetail } from '@/features/kyc/pages/KYCDetail';
 import { NotificationsManagement } from '@/features/notifications/pages/NotificationsManagement';
 import { ScheduledNotifications } from '@/features/notifications/pages/ScheduledNotifications';
 import { PriceMarkdown } from '@/features/fees/pages/PriceMarkdown';
@@ -54,6 +55,10 @@ export const router = createBrowserRouter([
           {
             path: 'kyc',
             element: <KYCReview />,
+          },
+          {
+            path: 'kyc/:kycId',
+            element: <KYCDetail />,
           },
           {
             path: 'user-management/summary',
