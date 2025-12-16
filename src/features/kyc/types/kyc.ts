@@ -10,6 +10,7 @@ export interface KYCEntry {
   lastName?: string;
   dateOfBirth?: string;
   gender?: string;
+  documentExpiryDate?: string;
   country: string;
   resultCode?: string;
   resultText?: string;
