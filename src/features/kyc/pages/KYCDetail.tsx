@@ -300,7 +300,7 @@ export function KYCDetail() {
               <div>
                 <Label className="text-sm text-gray-500">ID Number</Label>
                 <p className="text-base font-mono font-medium">
-                  {kyc.idNumber ? `${kyc.idNumber.slice(0, 4)}****${kyc.idNumber.slice(-4)}` : 'N/A'}
+                  {kyc.idNumber || 'N/A'}
                 </p>
               </div>
               {kyc.fullName && (
