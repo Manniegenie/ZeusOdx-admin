@@ -204,7 +204,7 @@ export function KYCDetail() {
       return;
     }
 
-    if (!window.confirm(`Initiate BVN verification for ${user.bvn}? This will create a pending verification request.`)) {
+    if (!window.confirm(`Verify BVN ${user.bvn}? This will permanently set bvnVerified to true and create an approved record.`)) {
       return;
     }
 
@@ -216,18 +216,18 @@ export function KYCDetail() {
       );
 
       if (response.success) {
-        toast.success('BVN verification initiated successfully');
+        toast.success('BVN verified successfully');
         // Refresh the data
         const updatedResponse = await KYCService.getKycDetails(kycId!);
         if (updatedResponse.success && updatedResponse.data) {
           setKycData(updatedResponse.data);
         }
       } else {
-        toast.error(response.error || 'Failed to initiate BVN verification');
+        toast.error(response.error || 'Failed to verify BVN');
       }
     } catch (error: any) {
       console.error('Error verifying BVN:', error);
-      toast.error(error?.response?.data?.error || 'Failed to initiate BVN verification');
+      toast.error(error?.response?.data?.error || 'Failed to verify BVN');
     } finally {
       setVerifyingBvn(false);
     }
