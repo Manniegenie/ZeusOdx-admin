@@ -82,6 +82,8 @@ export interface KYCDetailsResponse {
       kycLevel: string;
       kycStatus: string;
       createdAt: string;
+      bvn?: string;
+      bvnVerified?: boolean;
     };
   };
 }

@@ -141,4 +141,45 @@ export class KYCService {
       throw error;
     }
   }
+
+  /**
+   * Approve BVN for a user
+   */
+  static async approveBvn(phoneNumber: string, bvn: string): Promise<any> {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post(`${BASE_URL}${this.API_BASE}/approve-bvn`, {
+        phoneNumber,
+        bvn
+      }, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : undefined,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error approving BVN:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Disable BVN for a user
+   */
+  static async disableBvn(phoneNumber: string): Promise<any> {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post(`${BASE_URL}${this.API_BASE}/disable-bvn`, {
+        phoneNumber
+      }, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : undefined,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error disabling BVN:', error);
+      throw error;
+    }
+  }
 }
