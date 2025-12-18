@@ -182,4 +182,25 @@ export class KYCService {
       throw error;
     }
   }
+
+  /**
+   * Verify BVN for a user
+   */
+  static async verifyBvn(phoneNumber: string, bvn: string): Promise<any> {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post(`${BASE_URL}${this.API_BASE}/verify-bvn`, {
+        phoneNumber,
+        bvn
+      }, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : undefined,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error verifying BVN:', error);
+      throw error;
+    }
+  }
 }

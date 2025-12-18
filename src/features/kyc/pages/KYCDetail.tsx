@@ -19,6 +19,7 @@ export function KYCDetail() {
   const [approving, setApproving] = useState(false);
   const [declining, setDeclining] = useState(false);
   const [approvingBvn, setApprovingBvn] = useState(false);
+  const [verifyingBvn, setVerifyingBvn] = useState(false);
   const [disablingBvn, setDisablingBvn] = useState(false);
   const [disablingKyc, setDisablingKyc] = useState(false);
   const [kycData, setKycData] = useState<KYCDetailsResponse['data'] | null>(null);
@@ -191,6 +192,47 @@ export function KYCDetail() {
     }
   };
 
+  // Handle verify BVN
+  const handleVerifyBvn = async () => {
+    if (!kycData?.user?.phonenumber) {
+      toast.error('User phone number is required');
+      return;
+    }
+
+    if (!user.bvn) {
+      toast.error('User does not have a BVN on record');
+      return;
+    }
+
+    if (!window.confirm(`Initiate BVN verification for ${user.bvn}? This will create a pending verification request.`)) {
+      return;
+    }
+
+    try {
+      setVerifyingBvn(true);
+      const response = await KYCService.verifyBvn(
+        kycData.user.phonenumber,
+        user.bvn
+      );
+
+      if (response.success) {
+        toast.success('BVN verification initiated successfully');
+        // Refresh the data
+        const updatedResponse = await KYCService.getKycDetails(kycId!);
+        if (updatedResponse.success && updatedResponse.data) {
+          setKycData(updatedResponse.data);
+        }
+      } else {
+        toast.error(response.error || 'Failed to initiate BVN verification');
+      }
+    } catch (error: any) {
+      console.error('Error verifying BVN:', error);
+      toast.error(error?.response?.data?.error || 'Failed to initiate BVN verification');
+    } finally {
+      setVerifyingBvn(false);
+    }
+  };
+
   // Handle disable BVN
   const handleDisableBvn = async () => {
     if (!kycData?.user?.phonenumber) {
@@ -350,8 +392,50 @@ export function KYCDetail() {
             <p className="text-gray-600 mt-1">Review and manage KYC submission</p>
           </div>
         </div>
-        <div className={`px-4 py-2 rounded-lg border font-medium ${getStatusColor(kyc.status)}`}>
-          {kyc.status}
+        <div className="flex items-center gap-2">
+          {user.bvn && (
+            <Button
+              onClick={handleVerifyBvn}
+              disabled={verifyingBvn}
+              variant="outline"
+              size="sm"
+            >
+              {verifyingBvn ? (
+                <Loader2 className="w-3 h-3 animate-spin" />
+              ) : (
+                'Verify BVN'
+              )}
+            </Button>
+          )}
+          {user.bvn && user.bvnVerified && (
+            <Button
+              onClick={handleDisableBvn}
+              disabled={disablingBvn}
+              variant="destructive"
+              size="sm"
+            >
+              {disablingBvn ? (
+                <Loader2 className="w-3 h-3 animate-spin" />
+              ) : (
+                'Disable BVN'
+              )}
+            </Button>
+          )}
+          <Button
+            onClick={handleDisableKyc}
+            disabled={disablingKyc}
+            variant="destructive"
+            size="sm"
+          >
+            {disablingKyc ? (
+              <Loader2 className="w-3 h-3 animate-spin" />
+            ) : (
+              'Disable KYC'
+            )}
+          </Button>
+          <div className={`px-4 py-2 rounded-lg border font-medium ${getStatusColor(kyc.status)}`}>
+            {kyc.status}
+          </div>
         </div>
       </div>
 
@@ -755,66 +839,6 @@ export function KYCDetail() {
             </Card>
           )}
 
-          {/* Disable Actions */}
-          <Card className="p-6 border-red-200">
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-red-600">
-              <XCircle className="w-5 h-5" />
-              Disable Actions
-            </h2>
-            <div className="space-y-4">
-              {/* Disable BVN Button */}
-              {user.bvn && user.bvnVerified && (
-                <div>
-                  <p className="text-sm text-gray-600 mb-2">
-                    Disable the user's BVN verification. This will clear their BVN and set verification to false.
-                  </p>
-                  <Button
-                    onClick={handleDisableBvn}
-                    disabled={disablingBvn}
-                    variant="destructive"
-                    className="w-full"
-                  >
-                    {disablingBvn ? (
-                      <>
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Disabling...
-                      </>
-                    ) : (
-                      <>
-                        <XCircle className="w-4 h-4 mr-2" />
-                        Disable BVN
-                      </>
-                    )}
-                  </Button>
-                </div>
-              )}
-
-              {/* Disable KYC Button */}
-              <div>
-                <p className="text-sm text-gray-600 mb-2">
-                  Disable the user's KYC. This will cancel all pending KYC submissions and reset their KYC status.
-                </p>
-                <Button
-                  onClick={handleDisableKyc}
-                  disabled={disablingKyc}
-                  variant="destructive"
-                  className="w-full"
-                >
-                  {disablingKyc ? (
-                    <>
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Disabling...
-                    </>
-                  ) : (
-                    <>
-                      <XCircle className="w-4 h-4 mr-2" />
-                      Disable KYC
-                    </>
-                  )}
-                </Button>
-              </div>
-            </div>
-          </Card>
         </div>
       </div>
     </div>
