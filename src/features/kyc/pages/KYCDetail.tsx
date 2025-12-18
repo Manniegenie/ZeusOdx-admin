@@ -397,7 +397,7 @@ export function KYCDetail() {
             <Button
               onClick={handleVerifyBvn}
               disabled={verifyingBvn}
-              variant="outline"
+              variant="default"
               size="sm"
             >
               {verifyingBvn ? (
