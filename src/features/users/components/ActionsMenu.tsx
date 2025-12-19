@@ -58,7 +58,6 @@ export function ActionsMenu({ row }: { row: Row<User> }) {
     <div>
       <Button
         ref={btnRef}
-        variant="ghost"
         className="p-2 rounded hover:bg-gray-100"
         onClick={toggle}
         aria-label="More actions"
@@ -104,21 +103,18 @@ export function ActionsMenu({ row }: { row: Row<User> }) {
               Wipe pending balance
             </Link>
               <Button
-              variant={"ghost"}
                 onClick={() => navigate('/user-management/generate-wallet-by-phone', { state: { user: row.original } })}
                 className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 font-normal"
               >
                 Generate wallets
               </Button>
               <Button
-              variant={"ghost"}
                 onClick={() => navigate('/user-management/regenerate-wallet-by-phone', { state: { user: row.original } })}
                 className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 font-normal"
               >
                 Regenerate wallet
               </Button>
-              <Button variant={"ghost"}
-              className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 font-normal"
+              <Button               className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 font-normal"
               onClick={async () => {
                 const phone = row.original.phonenumber || '';
                 if (!phone) {
@@ -138,7 +134,6 @@ export function ActionsMenu({ row }: { row: Row<User> }) {
                 Wallet generation status
               </Button>
             <Button
-            variant={"ghost"}
               onClick={() => setConfirmOpen(true)}
               className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 cursor-pointer"
             >
@@ -246,7 +241,7 @@ export function ActionsMenu({ row }: { row: Row<User> }) {
           </DialogHeader>
           <div className="text-sm">Are you sure you want to delete <strong>{row.original.email}</strong>?</div>
           <DialogFooter>
-            <Button variant="ghost" className="border border-gray-300 text-gray-300" onClick={() => setConfirmOpen(false)}>Cancel</Button>
+            <Button  className="border border-gray-300 text-gray-300" onClick={() => setConfirmOpen(false)}>Cancel</Button>
             <Button className="ml-2 text-white bg-red-500" onClick={onConfirmDelete}>Delete</Button>
           </DialogFooter>
         </DialogContent>

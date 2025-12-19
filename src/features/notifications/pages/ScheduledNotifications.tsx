@@ -111,7 +111,6 @@ export function ScheduledNotifications() {
           <Button
             onClick={testNotification}
             disabled={testing}
-            variant="outline"
             className="flex items-center gap-2"
           >
             {testing ? (
@@ -123,7 +122,6 @@ export function ScheduledNotifications() {
           </Button>
           <Button
             onClick={loadStatus}
-            variant="outline"
             className="flex items-center gap-2"
           >
             <Calendar className="w-4 h-4" />
@@ -172,7 +170,6 @@ export function ScheduledNotifications() {
             <Button
               onClick={stopNotifications}
               disabled={loading}
-              variant="destructive"
               className="flex items-center gap-2"
             >
               {loading ? (

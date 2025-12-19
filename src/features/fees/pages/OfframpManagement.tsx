@@ -88,7 +88,7 @@ export function OfframpManagement() {
               <Button onClick={handleUpdate} disabled={saving}>
                 {saving ? 'Saving...' : 'Update rate'}
               </Button>
-              <Button variant="outline" onClick={() => dispatch(fetchOfframp())} disabled={ngn.loading}>
+              <Button  onClick={() => dispatch(fetchOfframp())} disabled={ngn.loading}>
                 {ngn.loading ? 'Refreshing...' : 'Refresh current rate'}
               </Button>
             </div>

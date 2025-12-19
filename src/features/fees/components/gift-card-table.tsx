@@ -400,7 +400,7 @@ export const GiftDataTable: React.FC<GiftDataTableProps> = ({
           </div>
         </div>
         <div className="flex items-center justify-end gap-2">
-          <Button variant="ghost">
+          <Button >
             <Filter className="text-gray-500 h-4 w-4" />
           </Button>
           <Button className="text-xs text-white font-normal" onClick={() => setOpen(true)}>
@@ -462,7 +462,6 @@ export const GiftDataTable: React.FC<GiftDataTableProps> = ({
       {pagination && (
         <div className="w-full flex items-center justify-between mt-4">
           <Button
-            variant="ghost"
             disabled={pagination.currentPage === 1}
             onClick={() => onPageChange?.(pagination.currentPage - 1)}
             className="px-3 py-1 rounded bg-gray-100 disabled:opacity-50 font-normal"
@@ -473,7 +472,6 @@ export const GiftDataTable: React.FC<GiftDataTableProps> = ({
             {Array.from({ length: pagination.totalPages }, (_, i) => i + 1).map((page) => (
               <Button
                 key={page}
-                variant={page === pagination.currentPage ? "default" : "ghost"}
                 onClick={() => onPageChange?.(page)}
                 className={`px-2 py-1 rounded font-normal text-xs border border-gray-200 ${page === pagination.currentPage ? "bg-primary text-white" : "bg-gray-100"
                   }`}
@@ -483,7 +481,6 @@ export const GiftDataTable: React.FC<GiftDataTableProps> = ({
             ))}
           </div>
           <Button
-            variant="ghost"
             disabled={pagination.currentPage === pagination.totalPages}
             onClick={() => onPageChange?.(pagination.currentPage + 1)}
             className="px-3 py-1 rounded bg-gray-100 disabled:opacity-50 font-normal"
@@ -654,7 +651,6 @@ export const GiftDataTable: React.FC<GiftDataTableProps> = ({
               <Button 
                 className="w-1/2 h-12 text-primary border border-green-700 font-normal" 
                 type="button" 
-                variant="ghost" 
                 onClick={handleCancel}
                 disabled={giftLoading}
               >
@@ -683,7 +679,6 @@ export const GiftDataTable: React.FC<GiftDataTableProps> = ({
               <Button 
                 className="w-1/2 h-12 text-primary border border-green-700 font-normal" 
                 type="button" 
-                variant="ghost" 
                 onClick={() => setBulkOpen(false)}
                 disabled={bulkLoading}
               >
@@ -731,7 +726,6 @@ export const GiftDataTable: React.FC<GiftDataTableProps> = ({
                 <Button 
                   className="w-1/2 h-12 text-primary border border-green-700 font-normal" 
                   type="button" 
-                  variant="ghost" 
                   onClick={() => setBulkOpen(false)}
                   disabled={bulkLoading}
                 >
@@ -754,10 +748,10 @@ export const GiftDataTable: React.FC<GiftDataTableProps> = ({
           </DialogHeader>
           <div className="py-4 text-center">Are you sure you want to delete this rate. This action cannot be undone.</div>
           <DialogFooter className="flex justify-end gap-2 pt-2">
-            <Button variant="ghost" className="w-1/2 bg-white border ring-none border-red-500 text-red-500" onClick={() => setConfirmOpen(false)}>
+            <Button  className="w-1/2 bg-white border ring-none border-red-500 text-red-500" onClick={() => setConfirmOpen(false)}>
               Cancel
             </Button>
-            <Button onClick={handleConfirmSubmit} className="w-1/2 text-white bg-red-500" variant="destructive" disabled={giftLoading}>
+            <Button onClick={handleConfirmSubmit} className="w-1/2 text-white bg-red-500"  disabled={giftLoading}>
               {giftLoading ? "Deleting..." : "Confirm"}
             </Button>
           </DialogFooter>

@@ -380,7 +380,6 @@ export function KYCDetail() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Button
-            variant="outline"
             onClick={() => navigate('/kyc')}
             className="flex items-center gap-2"
           >
@@ -397,7 +396,6 @@ export function KYCDetail() {
             <Button
               onClick={handleVerifyBvn}
               disabled={verifyingBvn}
-              variant="default"
               size="sm"
             >
               {verifyingBvn ? (
@@ -411,7 +409,6 @@ export function KYCDetail() {
             <Button
               onClick={handleDisableBvn}
               disabled={disablingBvn}
-              variant="destructive"
               size="sm"
             >
               {disablingBvn ? (
@@ -424,7 +421,6 @@ export function KYCDetail() {
           <Button
             onClick={handleDisableKyc}
             disabled={disablingKyc}
-            variant="destructive"
             size="sm"
           >
             {disablingKyc ? (
@@ -798,7 +794,6 @@ export function KYCDetail() {
                 <Button
                   onClick={handleDecline}
                   disabled={declining || !rejectionReason.trim()}
-                  variant="destructive"
                   className="w-full"
                 >
                   {declining ? (

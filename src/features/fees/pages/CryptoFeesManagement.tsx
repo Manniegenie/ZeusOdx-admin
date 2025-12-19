@@ -217,7 +217,6 @@ export function CryptoFeesManagement() {
               <Label>Actions</Label>
               <div className="flex gap-2">
                 <Button
-                  variant="outline"
                   onClick={() => {
                     setSearchTerm('');
                     setFilterCurrency('');
@@ -267,7 +266,7 @@ export function CryptoFeesManagement() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
                       <div className="flex items-center gap-2">
-                        <Badge variant="outline" className="font-mono">
+                        <Badge  className="font-mono">
                           {fee.currency}
                         </Badge>
                         <Badge variant="secondary">
@@ -284,7 +283,6 @@ export function CryptoFeesManagement() {
 
                     <div className="flex items-center gap-2">
                       <Button
-                        variant="ghost"
                         size="sm"
                         onClick={() => {
                           const newName = prompt('Enter new network name:', fee.networkName);
@@ -296,14 +294,12 @@ export function CryptoFeesManagement() {
                         <Edit className="h-4 w-4" />
                       </Button>
                       <Button
-                        variant="ghost"
                         size="sm"
                         onClick={() => handleEdit(fee)}
                       >
                         <Edit className="h-4 w-4" />
                       </Button>
                       <Button
-                        variant="destructive"
                         size="sm"
                         onClick={() => handleDelete(fee)}
                         disabled={deletingId === `${fee.currency}-${fee.network}`}
@@ -390,7 +386,6 @@ export function CryptoFeesManagement() {
 
             <div className="flex gap-2 pt-4">
               <Button
-                variant="outline"
                 onClick={() => setIsDialogOpen(false)}
                 className="flex-1"
               >

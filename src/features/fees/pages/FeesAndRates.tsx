@@ -123,12 +123,12 @@ export function FeesAndRates() {
               </div>
               <div className="flex gap-2">
                 <Link to="/fees-rates/crypto-fees-management">
-                  <Button variant="outline" className="flex items-center gap-2">
+                  <Button  className="flex items-center gap-2">
                     <span>Advanced Management</span>
                   </Button>
                 </Link>
                 <Link to="/fees-rates/price-markdown">
-                  <Button variant="outline" className="flex items-center gap-2">
+                  <Button  className="flex items-center gap-2">
                     <span>Adjust Price Markdown</span>
                   </Button>
                 </Link>
@@ -160,7 +160,7 @@ export function FeesAndRates() {
         <TabsContent value="onramp-rate" className="mt-6">
           <div className="flex justify-end mb-4">
             <Link to="/fees-rates/onramp-management">
-              <Button variant="outline">Open on-ramp management</Button>
+              <Button >Open on-ramp management</Button>
             </Link>
           </div>
           <Card className="w-full max-w-2xl mx-auto">
@@ -183,7 +183,6 @@ export function FeesAndRates() {
                 <span className="text-gray-800 text-xs">Positive number only</span>
               </div>
               <Button 
-                variant='default' 
                 className="w-full bg-primary h-10 text-white" 
                 onClick={setOnramp} 
                 disabled={onrampLoading}
@@ -197,7 +196,7 @@ export function FeesAndRates() {
         <TabsContent value="offramp-rate" className="mt-6">
           <div className="flex justify-end mb-4">
             <Link to="/fees-rates/offramp-management">
-              <Button variant="outline">Open off-ramp management</Button>
+              <Button >Open off-ramp management</Button>
             </Link>
           </div>
           <Card className="w-full max-w-2xl mx-auto">
@@ -220,7 +219,6 @@ export function FeesAndRates() {
                 <span className="text-gray-800 text-xs">Positive number only</span>
               </div>
               <Button 
-                variant='default' 
                 className="w-full bg-primary h-10 text-white" 
                 onClick={setOfframp} 
                 disabled={offrampLoading}

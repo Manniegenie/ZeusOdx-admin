@@ -29,11 +29,11 @@ export function AuditAndMonitoring() {
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Audit & Monitoring</h1>
         <div className="flex space-x-4">
-          <Button variant="outline">
+          <Button >
             <Filter className="w-4 h-4 mr-2" />
             Filter
           </Button>
-          <Button variant="outline">
+          <Button >
             <Download className="w-4 h-4 mr-2" />
             Export Logs
           </Button>

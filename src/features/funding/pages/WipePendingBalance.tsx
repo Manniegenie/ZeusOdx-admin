@@ -121,7 +121,7 @@ export function WipePendingBalance() {
                 </Select>
               </div>
                 <div className="flex w-full gap-1">
-                    <Button variant="ghost" className="w-1/2 h-10 border border-red-500" onClick={() => setWipeCurrency('BTC')}>Reset</Button>
+                    <Button  className="w-1/2 h-10 border border-red-500" onClick={() => setWipeCurrency('BTC')}>Reset</Button>
                     <Button className="w-1/2 text-white h-10" onClick={handleWipe} disabled={wipeLoading}>
                     {wipeLoading ? 'Wiping…' : 'Wipe pending balance'}
                     </Button>

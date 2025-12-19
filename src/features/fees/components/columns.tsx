@@ -38,7 +38,6 @@ const DeleteButton = ({ fee }: { fee: CryptoFee }) => {
   return (
     <Button 
       size="sm" 
-      variant="destructive" 
       onClick={handleDelete}
       disabled={deleting}
       className="bg-red-600 text-white hover:bg-red-700 disabled:bg-red-400"
@@ -77,10 +76,10 @@ export const columns: ColumnDef<CryptoFee>[] = [
       return (
         <div className="flex items-center gap-2">
           <Link to={`/fees-rates/view/${fee.currency}/${encodeURIComponent(fee.network)}`} state={{ fee }}>
-            <Button size="sm" variant="ghost">View</Button>
+            <Button size="sm" >View</Button>
           </Link>
           <Link to="/fees-rates/edit-fee" state={{ fee }}>
-            <Button size="sm" variant="outline">Edit</Button>
+            <Button size="sm" >Edit</Button>
           </Link>
           <Link to="/fees-rates/edit-network-name" state={{ fee }}>
             <Button size="sm">Edit Name</Button>

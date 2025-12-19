@@ -114,7 +114,7 @@ export function Settings() {
 
         {/* Actions */}
         <div className="flex justify-end space-x-4">
-          <Button variant="outline">Cancel</Button>
+          <Button >Cancel</Button>
           <Button>Save Changes</Button>
         </div>
       </div>

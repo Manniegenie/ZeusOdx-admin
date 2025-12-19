@@ -139,7 +139,6 @@ export function AddCryptoFee() {
             <div className="flex gap-4 pt-4">
               <Button
                 type="button"
-                variant="outline"
                 onClick={handleCancel}
                 disabled={saving}
               >

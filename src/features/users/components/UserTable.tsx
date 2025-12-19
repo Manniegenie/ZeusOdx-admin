@@ -91,7 +91,7 @@ export function DataTable({ data, loading, pagination, onPageChange }: DataTable
                 <TableCell>{getStatusBadge(user.emailVerified, user.bvnVerified)}</TableCell>
                 <TableCell>{formatDate(user.createdAt)}</TableCell>
                 <TableCell className="text-right">
-                  <Button variant="ghost" size="icon">
+                  <Button  size="icon">
                     <Eye className="h-4 w-4" />
                   </Button>
                 </TableCell>
@@ -112,7 +112,6 @@ export function DataTable({ data, loading, pagination, onPageChange }: DataTable
       {data.length > 0 && (
         <div className="flex items-center justify-between px-2 py-4">
           <Button
-            variant="outline"
             size="sm"
             onClick={() => onPageChange(pagination.currentPage - 1)}
             disabled={!pagination.hasPrevPage}
@@ -124,7 +123,6 @@ export function DataTable({ data, loading, pagination, onPageChange }: DataTable
             Page {pagination.currentPage} of {pagination.totalPages}
           </div>
           <Button
-            variant="outline"
             size="sm"
             onClick={() => onPageChange(pagination.currentPage + 1)}
             disabled={!pagination.hasNextPage}

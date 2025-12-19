@@ -153,7 +153,7 @@ export function NgnMarkup() {
                 <NumberInput value={markupInput} onChange={(e) => setMarkupInput(e.target.value)} allowDecimal={false} placeholder="N0" className="w-full mt-2 p-3 h-10 border border-gray-300 rounded" />
                 <span className="text-gray-800 text-xs">Applied globally to pricing calculations</span>
               </div>
-              <Button variant='default' className="w-full bg-primary h-10 text-white" onClick={updateMarkup} disabled={markupLoading}>{markupLoading ? 'Updating...' : 'Update Markup'}</Button>
+              <Button  className="w-full bg-primary h-10 text-white" onClick={updateMarkup} disabled={markupLoading}>{markupLoading ? 'Updating...' : 'Update Markup'}</Button>
             </TabsContent>
             <TabsContent value="on-ramp-rate"  className="border border-gray-200 shadow-none p-8 rounded w-full">
               <div className="bg-primary relative rounded-lg p-6 w-full text-white flex flex-col justify-center gap-6 mb-6">
@@ -167,7 +167,7 @@ export function NgnMarkup() {
                 <NumberInput value={onrampInput} onChange={(e) => setOnrampInput(e.target.value)} allowDecimal={true} placeholder="N0" className="w-full mt-2 p-3 h-10 border border-gray-300 rounded" />
                 <span className="text-gray-800 text-xs">Positive number only</span>
               </div>
-              <Button variant='default' className="w-full bg-primary h-10 text-white" onClick={setOnramp} disabled={onrampLoading}>{onrampLoading ? 'Updating...' : 'Update Rate'}</Button>
+              <Button  className="w-full bg-primary h-10 text-white" onClick={setOnramp} disabled={onrampLoading}>{onrampLoading ? 'Updating...' : 'Update Rate'}</Button>
             </TabsContent>
             <TabsContent value="off-ramp-rate"  className="border border-gray-200 shadow-none p-8 rounded w-full">
               <div className="bg-primary relative rounded-lg p-6 w-full text-white flex flex-col justify-center gap-6 mb-6">
@@ -181,7 +181,7 @@ export function NgnMarkup() {
                 <NumberInput value={offrampInput} onChange={(e) => setOfframpInput(e.target.value)} allowDecimal={true} placeholder="N0" className="w-full mt-2 p-3 h-10 border border-gray-300 rounded" />
                 <span className="text-gray-800 text-xs">Positive number only</span>
               </div>
-              <Button variant='default' className="w-full bg-primary h-10 text-white" onClick={setOfframp} disabled={offrampLoading}>{offrampLoading ? 'Updating...' : 'Update Rate'}</Button>
+              <Button  className="w-full bg-primary h-10 text-white" onClick={setOfframp} disabled={offrampLoading}>{offrampLoading ? 'Updating...' : 'Update Rate'}</Button>
             </TabsContent>
           </Tabs>
         </CardContent>

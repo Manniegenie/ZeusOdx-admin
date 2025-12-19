@@ -182,7 +182,6 @@ export function NotificationsManagement() {
         </div>
         <Button
           onClick={testFirebase}
-          variant="outline"
           className="flex items-center gap-2"
         >
           <Activity className="w-4 h-4" />
@@ -349,7 +348,6 @@ export function NotificationsManagement() {
             </Button>
 
             <Button
-              variant="outline"
               onClick={() => {
                 setFormData({
                   title: '',
@@ -371,7 +369,6 @@ export function NotificationsManagement() {
         <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           <Button
-            variant="outline"
             onClick={() => {
               setFormData(prev => ({
                 ...prev,
@@ -387,7 +384,6 @@ export function NotificationsManagement() {
           </Button>
 
           <Button
-            variant="outline"
             onClick={() => {
               setFormData(prev => ({
                 ...prev,
@@ -403,7 +399,6 @@ export function NotificationsManagement() {
           </Button>
 
           <Button
-            variant="outline"
             onClick={() => {
               setFormData(prev => ({
                 ...prev,
@@ -434,7 +429,6 @@ export function NotificationsManagement() {
               Removes all stored Expo push tokens for every user. Devices will need to re-register on next app open.
             </p>
             <Button
-              variant="destructive"
               type="button"
               onClick={handleClearAllTokens}
               disabled={clearAllLoading}
@@ -453,7 +447,6 @@ export function NotificationsManagement() {
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
             <Button
-              variant="outline"
               type="button"
               onClick={handleClearTokensByPhone}
               disabled={clearPhoneLoading}

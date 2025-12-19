@@ -84,7 +84,7 @@ export function Disable2Fa() {
             Are you sure you want to disable two-factor authentication for <strong>{emailValue}</strong>? This action can reduce account security.
           </div>
           <DialogFooter>
-            <Button variant="secondary" className='border border-red-500 text-red-500' onClick={() => setConfirmOpen(false)}>Cancel</Button>
+            <Button  className='border border-red-500 text-red-500' onClick={() => setConfirmOpen(false)}>Cancel</Button>
             <Button onClick={handleDisable} className='bg-red-500 text-white'>Disable 2FA</Button>
           </DialogFooter>
         </DialogContent>

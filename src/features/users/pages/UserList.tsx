@@ -164,7 +164,6 @@ export function UserList() {
             </Button>
             <Button
               onClick={() => setShowFilters(!showFilters)}
-              variant={showFilters ? "secondary" : "outline"}
               className="flex items-center gap-2"
             >
               <Filter className="h-4 w-4" />
@@ -178,7 +177,6 @@ export function UserList() {
             {activeFilterCount > 0 && (
               <Button
                 onClick={clearFilters}
-                variant="outline"
                 className="text-red-600 hover:bg-red-50 border-red-300"
               >
                 Clear All
@@ -272,7 +270,7 @@ export function UserList() {
                 <Button onClick={handleSearch} className="bg-green-500 text-white hover:bg-green-600">
                   Apply Filters
                 </Button>
-                <Button onClick={() => setShowFilters(false)} variant="outline">
+                <Button onClick={() => setShowFilters(false)} >
                   Cancel
                 </Button>
               </div>
@@ -351,7 +349,6 @@ export function UserList() {
           <div className="flex items-center justify-between">
             <Button
               aria-label="Previous page"
-              variant="outline"
               size="sm"
               disabled={currentPage <= 1}
               onClick={() => handlePageChange(Math.max(0, (currentPage - 2) * limit))}
@@ -383,7 +380,6 @@ export function UserList() {
                     return (
                       <Button
                         key={page}
-                        variant={isActive ? "default" : "outline"}
                         size="sm"
                         aria-current={isActive ? 'page' : undefined}
                         onClick={() => handlePageChange((page - 1) * limit)}
@@ -398,7 +394,6 @@ export function UserList() {
             </div>
             <Button
               aria-label="Next page"
-              variant="outline"
               size="sm"
               disabled={currentPage >= totalPages}
               onClick={() => handlePageChange(currentPage * limit)}

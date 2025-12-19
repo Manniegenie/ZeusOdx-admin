@@ -161,7 +161,6 @@ export function DashboardLayout() {
                 <img src={Logo} alt="Logo" className="h-8" />
               </h1>
               <Button
-                variant="ghost"
                 size="icon"
                 onClick={toggleSidebar}
                 className="hover:bg-gray-100"
@@ -263,7 +262,6 @@ export function DashboardLayout() {
           {/* Header */}
           <header className="h-auto bg-transparent w-full z-20 flex items-center justify-end px-6 py-4">
             <Button
-              variant="secondary"
               size="icon"
               className="lg:hidden"
               onClick={toggleSidebar}

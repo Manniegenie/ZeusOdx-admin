@@ -143,7 +143,6 @@ export function SearchFee({ initialFee, loading = false, error, viewOnly = false
               <h3 className="font-semibold">Fee Details</h3>
               {!viewOnly && (
                 <Button
-                  variant="destructive"
                   size="sm"
                   onClick={handleDelete}
                   disabled={deleting}

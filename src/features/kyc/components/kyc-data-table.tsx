@@ -90,7 +90,6 @@ export function KYCDataTable({
         </div>
         <Button
           onClick={onRefresh}
-          variant="outline"
           size="sm"
           className="flex items-center gap-2"
         >
@@ -160,7 +159,6 @@ export function KYCDataTable({
                 <TableCell>
                   <div className="flex items-center gap-2">
                     <Button
-                      variant="outline"
                       size="sm"
                       onClick={() => navigate(`/kyc/${entry._id}`)}
                       className="flex items-center gap-1"
@@ -180,7 +178,6 @@ export function KYCDataTable({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Button
-            variant="outline"
             size="sm"
             onClick={() => {
               // TODO: Implement previous page
@@ -198,7 +195,6 @@ export function KYCDataTable({
               return (
                 <Button
                   key={pageNum}
-                  variant={pageNum === currentPage ? "default" : "outline"}
                   size="sm"
                   onClick={() => {
                     // TODO: Implement page navigation
@@ -213,7 +209,6 @@ export function KYCDataTable({
           </div>
 
           <Button
-            variant="outline"
             size="sm"
             onClick={onPageChange}
             disabled={!hasNextPage}

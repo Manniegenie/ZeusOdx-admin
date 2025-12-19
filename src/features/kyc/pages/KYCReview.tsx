@@ -254,7 +254,7 @@ export function KYCReview() {
               <Button onClick={applyFilters} className="bg-green-500 text-white hover:bg-green-600">
                 Apply Filters
               </Button>
-              <Button onClick={clearFilters} variant="outline">
+              <Button onClick={clearFilters} >
                 Clear Filters
               </Button>
             </div>

@@ -163,7 +163,7 @@ export function FundUserForm() {
           </div>
           <DialogFooter>
             <div className="flex gap-2">
-              <Button className="text-red-500 border border-red-500" variant="ghost" onClick={() => setConfirmOpen(false)}>Cancel</Button>
+              <Button className="text-red-500 border border-red-500"  onClick={() => setConfirmOpen(false)}>Cancel</Button>
               <Button className="text-white" disabled={confirmLoading} onClick={handleConfirm}>{confirmLoading ? 'Funding...' : 'Confirm and Fund'}</Button>
             </div>
           </DialogFooter>

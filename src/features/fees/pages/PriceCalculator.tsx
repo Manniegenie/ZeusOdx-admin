@@ -155,7 +155,7 @@ export function PriceCalculator() {
                 <span className="text-gray-500 text-[11px]">Affects all assets system-wide</span>
               </div>
               <div className="flex gap-2">
-                <Button variant='default' className="flex-1 bg-primary h-10 text-white" onClick={async () => {
+                <Button  className="flex-1 bg-primary h-10 text-white" onClick={async () => {
                   if (!markdownInput) return toast.error('Provide a markdown percentage');
                   const num = Number(markdownInput);
                   if (!Number.isFinite(num) || num < 0 || num > 100) return toast.error('Invalid percentage');
@@ -174,7 +174,7 @@ export function PriceCalculator() {
                     toast.error(msg || 'Failed to update');
                   }
                 }}>{assetState.loading ? 'Updating...' : 'Update markdown'}</Button>
-                <Button variant='ghost' className="w-36" onClick={async () => {
+                <Button  className="w-36" onClick={async () => {
                   setToggleLoading(true);
                   try {
                     const payload = await dispatch(toggleGlobalMarkdown({})).unwrap();
@@ -244,7 +244,6 @@ export function PriceCalculator() {
                   </span>
                 </div>
                 <Button
-                  variant="default"
                   className="w-full bg-primary h-10 text-white"
                 >
                   Update markdown

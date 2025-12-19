@@ -136,7 +136,7 @@ export function PriceMarkdown() {
               <Button onClick={handleUpdate} disabled={assetState.loading}>
                 {assetState.loading ? 'Saving...' : 'Update markdown'}
               </Button>
-              <Button variant="outline" disabled={toggleLoading} onClick={handleToggle}>
+              <Button  disabled={toggleLoading} onClick={handleToggle}>
                 {toggleLoading ? 'Updating...' : active ? 'Disable markdown' : 'Enable markdown'}
               </Button>
             </div>
