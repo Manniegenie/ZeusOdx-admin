@@ -3,7 +3,7 @@ export const DEPOSIT_NETWORK_OPTIONS = [
   'ETH',      // Ethereum (ERC20)
   'BSC',      // Binance Smart Chain (BEP20)
   'TRX',      // Tron (TRC20)
-  'POL',    // Polygon Native (Replaces 'POL' as a network code)
+  'MATIC',    // Polygon Native (Replaces 'POL' as a network code)
   'SOL',      // Solana Native
   'ARBITRUM', // Arbitrum One
   'AVAXC',    // Avalanche C-Chain
