@@ -1,6 +1,13 @@
 import axios from 'axios';
 
-const instance = axios.create();
+const instance = axios.create({
+  baseURL: import.meta.env.VITE_BASE_URL, // Add this
+  timeout: 30000, // Add timeout
+  withCredentials: true, // Important for CORS with credentials
+  headers: {
+    'Content-Type': 'application/json',
+  }
+});
 
 // Request interceptor: Add auth token to all requests
 instance.interceptors.request.use(

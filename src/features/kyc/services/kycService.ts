@@ -7,7 +7,8 @@ import type {
   FilterParams 
 } from '../types/kyc';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+// Remove this line - not needed anymore
+// const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export class KYCService {
   private static readonly API_BASE = '/admin-kyc';
@@ -29,12 +30,8 @@ export class KYCService {
       if (params.sortBy) queryParams.append('sortBy', params.sortBy);
       if (params.sortOrder) queryParams.append('sortOrder', params.sortOrder);
 
-      const token = localStorage.getItem('token');
-      const response = await axios.get(`${BASE_URL}${this.API_BASE}/list?${queryParams.toString()}`, {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : undefined,
-        },
-      });
+      // Remove BASE_URL - axios instance already has it
+      const response = await axios.get(`${this.API_BASE}/list?${queryParams.toString()}`);
       return response.data;
     } catch (error) {
       console.error('Error fetching KYC entries:', error);
@@ -47,12 +44,7 @@ export class KYCService {
    */
   static async getKycDetails(kycId: string): Promise<KYCDetailsResponse> {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(`${BASE_URL}${this.API_BASE}/details/${kycId}`, {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : undefined,
-        },
-      });
+      const response = await axios.get(`${this.API_BASE}/details/${kycId}`);
       return response.data;
     } catch (error) {
       console.error('Error fetching KYC details:', error);
@@ -65,16 +57,11 @@ export class KYCService {
    */
   static async approveKyc(phoneNumber: string, idType: string, idNumber: string, fullName?: string): Promise<any> {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(`${BASE_URL}${this.API_BASE}/approve`, {
+      const response = await axios.post(`${this.API_BASE}/approve`, {
         phoneNumber,
         idType,
         idNumber,
         fullName
-      }, {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : undefined,
-        },
       });
       return response.data;
     } catch (error) {
@@ -88,14 +75,9 @@ export class KYCService {
    */
   static async cancelKyc(phoneNumber: string, reason?: string): Promise<any> {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(`${BASE_URL}${this.API_BASE}/cancel`, {
+      const response = await axios.post(`${this.API_BASE}/cancel`, {
         phoneNumber,
         reason
-      }, {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : undefined,
-        },
       });
       return response.data;
     } catch (error) {
@@ -109,13 +91,8 @@ export class KYCService {
    */
   static async resetKyc(phoneNumber: string): Promise<any> {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(`${BASE_URL}${this.API_BASE}/reset`, {
+      const response = await axios.post(`${this.API_BASE}/reset`, {
         phoneNumber
-      }, {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : undefined,
-        },
       });
       return response.data;
     } catch (error) {
@@ -129,12 +106,7 @@ export class KYCService {
    */
   static async upgradeKyc(request: KYCUpgradeRequest): Promise<KYCUpgradeResponse> {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(`${BASE_URL}${this.API_BASE}/upgrade`, request, {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : undefined,
-        },
-      });
+      const response = await axios.post(`${this.API_BASE}/upgrade`, request);
       return response.data;
     } catch (error) {
       console.error('Error upgrading KYC:', error);
@@ -147,14 +119,9 @@ export class KYCService {
    */
   static async approveBvn(phoneNumber: string, bvn: string): Promise<any> {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(`${BASE_URL}${this.API_BASE}/approve-bvn`, {
+      const response = await axios.post(`${this.API_BASE}/approve-bvn`, {
         phoneNumber,
         bvn
-      }, {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : undefined,
-        },
       });
       return response.data;
     } catch (error) {
@@ -168,13 +135,8 @@ export class KYCService {
    */
   static async disableBvn(phoneNumber: string): Promise<any> {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(`${BASE_URL}${this.API_BASE}/disable-bvn`, {
+      const response = await axios.post(`${this.API_BASE}/disable-bvn`, {
         phoneNumber
-      }, {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : undefined,
-        },
       });
       return response.data;
     } catch (error) {
@@ -188,14 +150,9 @@ export class KYCService {
    */
   static async verifyBvn(phoneNumber: string, bvn: string): Promise<any> {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(`${BASE_URL}${this.API_BASE}/verify-bvn`, {
+      const response = await axios.post(`${this.API_BASE}/verify-bvn`, {
         phoneNumber,
         bvn
-      }, {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : undefined,
-        },
       });
       return response.data;
     } catch (error) {
