@@ -34,9 +34,9 @@ Complete gift card submission management system for ZeusODX admin panel. This fe
 ## Backend Endpoints
 
 ### Rate Management
-**Base**: `/admin/giftcard`
+**Base**: `/admingiftcard`
 
-#### GET `/admin/giftcard/rates`
+#### GET `/admingiftcard/rates`
 Get all gift card rates with filtering and pagination
 
 **Query Parameters**:
@@ -83,7 +83,7 @@ Get all gift card rates with filtering and pagination
 }
 ```
 
-#### POST `/admin/giftcard/rates`
+#### POST `/admingiftcard/rates`
 Create a new gift card rate
 
 **Request Body**:
@@ -103,7 +103,7 @@ Create a new gift card rate
 }
 ```
 
-#### PUT `/admin/giftcard/rates/:id`
+#### PUT `/admingiftcard/rates/:id`
 Update an existing gift card rate
 
 **Request Body**:
@@ -119,7 +119,7 @@ Update an existing gift card rate
 }
 ```
 
-#### DELETE `/admin/giftcard/rates/:id`
+#### DELETE `/admingiftcard/rates/:id`
 Delete a gift card rate
 
 **Response**:
@@ -142,7 +142,7 @@ Delete a gift card rate
 
 ### Submission Management
 
-#### GET `/admin/giftcard/submissions`
+#### GET `/admingiftcard/submissions`
 Get all gift card submissions with filtering
 
 **Query Parameters**:
@@ -211,12 +211,12 @@ Get all gift card submissions with filtering
 }
 ```
 
-#### GET `/admin/giftcard/submissions/:id`
+#### GET `/admingiftcard/submissions/:id`
 Get a specific gift card submission by ID
 
 **Response**: Single submission object with full details (same structure as above)
 
-#### POST `/admin/giftcard/submissions/:id/approve`
+#### POST `/admingiftcard/submissions/:id/approve`
 Approve a gift card submission and fund user
 
 **Request Body**:
@@ -250,7 +250,7 @@ Approve a gift card submission and fund user
 }
 ```
 
-#### POST `/admin/giftcard/submissions/:id/reject`
+#### POST `/admingiftcard/submissions/:id/reject`
 Reject a gift card submission
 
 **Request Body**:
@@ -286,7 +286,7 @@ Reject a gift card submission
 }
 ```
 
-#### POST `/admin/giftcard/submissions/:id/review`
+#### POST `/admingiftcard/submissions/:id/review`
 Mark submission as under review
 
 **Response**:
@@ -807,15 +807,15 @@ This logical grouping places it near financial management features while giving 
 - ✅ Navigation integration complete
 
 **Backend Endpoints Used**:
-- GET `/admin/giftcard/rates` - Rate listing
-- POST `/admin/giftcard/rates` - Rate creation
-- PUT `/admin/giftcard/rates/:id` - Rate updates
-- DELETE `/admin/giftcard/rates/:id` - Rate deletion
-- GET `/admin/giftcard/submissions` - Submission listing
-- GET `/admin/giftcard/submissions/:id` - Submission details
-- POST `/admin/giftcard/submissions/:id/approve` - Approve submission
-- POST `/admin/giftcard/submissions/:id/reject` - Reject submission
-- POST `/admin/giftcard/submissions/:id/review` - Mark as reviewing
+- GET `/admingiftcard/rates` - Rate listing
+- POST `/admingiftcard/rates` - Rate creation
+- PUT `/admingiftcard/rates/:id` - Rate updates
+- DELETE `/admingiftcard/rates/:id` - Rate deletion
+- GET `/admingiftcard/submissions` - Submission listing
+- GET `/admingiftcard/submissions/:id` - Submission details
+- POST `/admingiftcard/submissions/:id/approve` - Approve submission
+- POST `/admingiftcard/submissions/:id/reject` - Reject submission
+- POST `/admingiftcard/submissions/:id/review` - Mark as reviewing
 
 **How to Access**:
 1. Click **"Gift Cards"** in the left navigation panel
